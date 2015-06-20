@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE repositories SYSTEM "http://www.gentoo.org/dtd/repositories.dtd">
+<repositories xmlns="" version="1.0">
+  <repo quality="experimental" status="unofficial">
+    <name>ASC</name>
+    <description lang="en"><![CDATA[Ebuilds for ASC workstations]]></description>
+    <homepage>https://github.com/voitsik/gentoo-overlay</homepage>
+    <owner type="person">
+      <email>voitsik@asc.rssi.ru</email>
+      <name>Petr Voytsik</name>
+    </owner>
+    <source type="git">https://github.com/voitsik/gentoo-overlay.git</source>
+    <source type="git">git://github.com/voitsik/gentoo-overlay.git</source>
+    <source type="git">git@github.com:voitsik/gentoo-overlay.git</source>
+    <feed>https://github.com/voitsik/gentoo-overlay/commits/master.atom</feed>
+  </repo>
+</repositories>
