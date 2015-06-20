@@ -41,7 +41,8 @@ RDEPEND="sys-libs/ncurses
 	pgplot? ( dev-perl/PGPLOT )"
 
 DEPEND="${RDEPEND}
-	fortran? ( >=dev-perl/ExtUtils-F77-1.13 )"
+	fortran? ( >=dev-perl/ExtUtils-F77-1.13 )
+	dev-perl/Devel-CheckLib"
 
 mydoc="BUGS DEPENDENCIES DEVELOPMENT Known_problems MANIFEST* Release_Notes"
 
