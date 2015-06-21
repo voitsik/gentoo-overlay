@@ -14,8 +14,11 @@ KEYWORDS="~amd64"
 
 IUSE=""
 
-DEPEND="dev-perl/PDL
-	sci-libs/plplot"
-RDEPEND="${DEPEND}"
+RDEPEND="
+	dev-perl/PDL[badval]
+	sci-libs/plplot
+"
+
+DEPEND="${RDEPEND}"
 
 SRC_TEST="do"

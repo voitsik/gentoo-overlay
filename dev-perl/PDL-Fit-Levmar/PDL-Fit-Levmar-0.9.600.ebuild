@@ -14,9 +14,9 @@ KEYWORDS="~amd64"
 
 IUSE="lapack"
 
-DEPEND="dev-perl/PDL
+RDEPEND="dev-perl/PDL
 	lapack? ( virtual/lapack )"
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}"
 
 SRC_TEST="do"
 

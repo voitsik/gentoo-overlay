@@ -14,9 +14,12 @@ KEYWORDS="~amd64"
 
 IUSE="gsl pgplot"
 
-DEPEND="dev-perl/PDL
+RDEPEND="
+	>=dev-perl/PDL-2.8.0
 	gsl? ( dev-perl/PDL[gsl] )
-	pgplot? ( dev-perl/PDL[pgplot] )"
-RDEPEND="${DEPEND}"
+	pgplot? ( dev-perl/PDL[pgplot] )
+"
+
+DEPEND="${RDEPEND}"
 
 SRC_TEST="do"
