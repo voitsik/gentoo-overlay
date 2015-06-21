@@ -14,8 +14,14 @@ KEYWORDS="~amd64"
 
 IUSE=""
 
-DEPEND="virtual/perl-Exporter"
-RDEPEND="${DEPEND}
-	virtual/perl-ExtUtils-MakeMaker"
+RDEPEND="
+	virtual/perl-Exporter
+	virtual/perl-File-Spec
+	virtual/perl-File-Temp
+"
+
+DEPEND="${RDEPEND}
+	virtual/perl-ExtUtils-MakeMaker
+"
 
 SRC_TEST="do"
