@@ -59,7 +59,7 @@ src_prepare() {
 	# respect user choice for fortran compiler+flags, add pic
 	epatch "${FILESDIR}"/${PN}-2.4.11-fortran.patch
 	# search for shared hdf instead of static
-	epatch "${FILESDIR}"/${P}-shared-hdf.patch
+	epatch "${FILESDIR}"/${PN}-2.12.0-shared-hdf.patch
 	find . -name Makefile.PL -exec \
 		sed -i -e "s|/usr|${EPREFIX}/usr|g" {} \; || die
 }
