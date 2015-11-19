@@ -15,7 +15,7 @@ DESCRIPTION="Perl Data Language for scientific computing"
 
 LICENSE="|| ( Artistic GPL-1+ ) public-domain PerlDL"
 SLOT="0"
-KEYWORDS="amd64 arm ppc x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~amd64"
 # proj support removed #497328
 IUSE="+badval doc fortran gd gsl hdf netpbm pdl2 pgplot threads"
 

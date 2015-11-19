@@ -5,7 +5,7 @@
 EAPI=5
 
 MODULE_AUTHOR=CHM
-MODULE_VERSION=2.007
+MODULE_VERSION=2.014
 FORTRAN_NEEDED=fortran
 
 inherit perl-module eutils fortran-2
@@ -17,7 +17,7 @@ LICENSE="|| ( Artistic GPL-1+ ) public-domain PerlDL"
 SLOT="0"
 KEYWORDS="~amd64"
 # proj support removed #497328
-IUSE="+badval doc fortran gd gsl hdf netpbm pdl2 pgplot plplot threads"
+IUSE="+badval doc fortran gd gsl hdf netpbm pdl2 pgplot threads"
 
 RDEPEND="sys-libs/ncurses
 	app-arch/sharutils
@@ -39,13 +39,11 @@ RDEPEND="sys-libs/ncurses
 	hdf? ( sci-libs/hdf )
 	netpbm? ( media-libs/netpbm virtual/ffmpeg )
 	pdl2? ( dev-perl/Devel-REPL )
-	pgplot? ( dev-perl/PGPLOT )
-	plplot? ( sci-libs/plplot )"
+	pgplot? ( dev-perl/PGPLOT )"
 
 DEPEND="${RDEPEND}
-	fortran? ( >=dev-perl/ExtUtils-F77-1.13 )"
-
-REQUIRED_USE="plplot? ( badval )"
+	fortran? ( >=dev-perl/ExtUtils-F77-1.13 )
+	dev-perl/Devel-CheckLib"
 
 mydoc="BUGS DEPENDENCIES DEVELOPMENT Known_problems MANIFEST* Release_Notes"
 
@@ -61,7 +59,7 @@ src_prepare() {
 	# respect user choice for fortran compiler+flags, add pic
 	epatch "${FILESDIR}"/${PN}-2.4.11-fortran.patch
 	# search for shared hdf instead of static
-	epatch "${FILESDIR}"/${PN}-2.4.11-shared-hdf.patch
+	epatch "${FILESDIR}"/${PN}-2.12.0-shared-hdf.patch
 	find . -name Makefile.PL -exec \
 		sed -i -e "s|/usr|${EPREFIX}/usr|g" {} \; || die
 }
@@ -77,8 +75,6 @@ src_configure() {
 		-e "/WITH_GD/s/=>.*/=> $(use gd && echo 1 || echo 0),/" \
 		-e "/WITH_HDF/s/=>.*/=> $(use hdf && echo 1 || echo 0),/" \
 		-e "/WITH_MINUIT/s/=>.*/=> $(use fortran && echo 1|| echo 0),/" \
-		-e "/WITH_PGPLOT/s/=>.*/=> $(use pgplot && echo 1 || echo 0),/" \
-		-e "/WITH_PLPLOT/s/=>.*/=> $(use plplot && echo 1 || echo 0),/" \
 		-e "/WITH_POSIX_THREADS/s/=>.*/=> $(use threads && echo 1 || echo 0),/" \
 		-e "/WITH_PROJ/s/=>.*/=> $(echo 0),/" \
 		-e "/WITH_SLATEC/s/=>.*/=> $(use fortran && echo 1|| echo 0),/" \
