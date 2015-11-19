@@ -21,14 +21,14 @@ RDEPEND="net-print/cups"
 S="${WORKDIR}/${MY_PN}"
 
 src_prepare() {
-	sed -i -e 's:/usr/lib/cups/filter/rastertohp:/usr/libexec/cups/filter/rastertohp:' rastertookimonochrome || die 'Sed failed!'
-
+	sed -i -e 's:/usr/lib/cups/filter/rastertohp:/usr/libexec/cups/filter/rastertohp:' \
+		rastertookimonochrome || die 'Sed failed!'
 }
 
 src_install() {
 	dodoc readme.pdf || die "missing readme.pdf"
-	exeinto /usr/libexec/cups/filter
+	exeinto $(cups-config --serverbin)/filter
 	doexe rastertookimonochrome || die "missing rastertookimonochrome"
-	insinto /usr/share/cups/model
+	insinto $(cups-config --datadir)/model
 	doins OK400PCL.ppd.gz || die "missing ppd file"
 }

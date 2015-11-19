@@ -21,6 +21,6 @@ RDEPEND="net-print/cups"
 S="${WORKDIR}"
 
 src_install() {
-	insinto /usr/share/cups/model
+	insinto $(cups-config --datadir)/model
 	doins ${MY_PN} || die "missing ppd file"
 }
