@@ -16,7 +16,7 @@ IUSE="gsl pgplot"
 
 RDEPEND="
 	>=dev-perl/PDL-2.8.0
-	gsl? ( dev-perl/PDL[gsl] )
+	gsl? ( sci-libs/gsl )
 	pgplot? ( dev-perl/PDL[pgplot] )
 "
 
