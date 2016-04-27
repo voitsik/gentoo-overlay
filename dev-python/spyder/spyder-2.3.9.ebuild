@@ -2,27 +2,28 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
-PYTHON_COMPAT=( python{2_7,3_3,3_4} )
+PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
 
-inherit distutils-r1
+inherit eutils distutils-r1
 
 DESCRIPTION="Python IDE with matlab-like features"
 HOMEPAGE="https://github.com/spyder-ide/spyder"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.zip"
+SRC_URI="https://bitbucket.org/${PN}-ide/${PN}lib/downloads/${P}.zip"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
-IUSE="doc ipython jedi matplotlib numpy pep8 +pyflakes pylint +rope scipy sphinx"
+IUSE="doc ipython jedi matplotlib numpy pep8 +pyflakes pylint qtconsole +rope scipy sphinx"
 
 # rope requires no version bordering since all are >= miniumum version
 RDEPEND="
 	|| ( dev-python/PyQt4[${PYTHON_USEDEP},svg,webkit]
-		 dev-python/pyside[${PYTHON_USEDEP},svg,webkit] )
+	dev-python/pyside[${PYTHON_USEDEP},svg,webkit] )
 	ipython? ( dev-python/ipython[qt4,${PYTHON_USEDEP}] )
-	jedi? ( <dev-python/jedi-0.9.0[${PYTHON_USEDEP}] )
+	jedi? ( <dev-python/jedi-0.9.0[${PYTHON_USEDEP}] )	
+	qtconsole? ( dev-python/qtconsole[${PYTHON_USEDEP}] )
 	matplotlib? ( dev-python/matplotlib[${PYTHON_USEDEP}] )
 	numpy? ( dev-python/numpy[${PYTHON_USEDEP}] )
 	pep8? ( dev-python/pep8[${PYTHON_USEDEP}] )
@@ -36,7 +37,7 @@ DEPEND="${RDEPEND}
 	doc? ( >=dev-python/sphinx-0.6.0[${PYTHON_USEDEP}] )"
 
 # Courtesy of Arfrever
-PATCHES=( "${FILESDIR}"/${PN}-2.3.1-build.patch )
+PATCHES=( "${FILESDIR}"/${P}-build.patch )
 
 python_compile_all() {
 	if use doc; then
@@ -45,8 +46,8 @@ python_compile_all() {
 }
 
 python_install_all() {
+	use doc && local HTML_DOCS=( doc/html/. )
 	distutils-r1_python_install_all
 	doicon spyderlib/images/spyder.svg
 	make_desktop_entry spyder Spyder spyder "Development;IDE"
-	use doc && dodoc -r doc/html/
 }

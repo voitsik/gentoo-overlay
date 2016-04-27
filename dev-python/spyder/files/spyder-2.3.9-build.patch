@@ -1,5 +1,5 @@
---- setup.py
-+++ setup.py
+--- a/setup.py
++++ b/setup.py
 @@ -21,8 +21,6 @@
  import shutil
  
