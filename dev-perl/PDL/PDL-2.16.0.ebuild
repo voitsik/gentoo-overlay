@@ -5,7 +5,7 @@
 EAPI=5
 
 MODULE_AUTHOR=CHM
-MODULE_VERSION=2.015
+MODULE_VERSION=2.016
 FORTRAN_NEEDED=fortran
 
 inherit perl-module eutils fortran-2
@@ -35,7 +35,7 @@ RDEPEND="sys-libs/ncurses
 	virtual/perl-Storable
 	virtual/perl-Text-Balanced
 	gd? ( media-libs/gd )
-	gsl? ( <sci-libs/gsl-2 )
+	gsl? ( sci-libs/gsl )
 	hdf? ( sci-libs/hdf )
 	netpbm? ( media-libs/netpbm virtual/ffmpeg )
 	pdl2? ( dev-perl/Devel-REPL )
