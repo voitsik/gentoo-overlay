@@ -3,8 +3,8 @@
 
 EAPI=5
 
-MODULE_AUTHOR=MAGGIEXYZ
-MODULE_VERSION=0.6.5_2
+MODULE_AUTHOR=ETJ
+MODULE_VERSION=0.75
 inherit perl-module
 
 DESCRIPTION="A collection of statistics modules in Perl Data Language"
@@ -16,7 +16,7 @@ IUSE="gsl pgplot"
 
 RDEPEND="
 	>=dev-perl/PDL-2.8.0
-	gsl? ( dev-perl/PDL[gsl] )
+	gsl? ( sci-libs/gsl )
 	pgplot? ( dev-perl/PDL[pgplot] )
 "
 
