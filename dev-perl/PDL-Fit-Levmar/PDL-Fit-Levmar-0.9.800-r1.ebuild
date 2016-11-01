@@ -3,8 +3,8 @@
 
 EAPI=6
 
-MODULE_AUTHOR=JLAPEYRE
-MODULE_VERSION=0.0098
+DIST_AUTHOR=JLAPEYRE
+DIST_VERSION=0.0098
 inherit perl-module
 
 DESCRIPTION="Levenberg-Marquardt fit/optimization routines for PDL"
