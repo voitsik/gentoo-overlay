@@ -75,7 +75,6 @@ src_unpack() {
 
 src_prepare() {
 	local target=(
-		cryptography-1.0-py2.7-*.egg
 		dropbox_sqlite_ext-0.0-py2.7.egg
 		setuptools-20.3-py2.7.egg
 	)
