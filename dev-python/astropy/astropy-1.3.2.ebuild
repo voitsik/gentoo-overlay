@@ -55,7 +55,6 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-1.0.4-system-six.patch
 	"${FILESDIR}"/${PN}-1.0.4-system-configobj.patch
 	"${FILESDIR}"/${PN}-1.3-mark-known-failures.patch
-	"${FILESDIR}"/${PN}-1.2.1-cfitsio-338.patch
 )
 
 python_prepare_all() {
