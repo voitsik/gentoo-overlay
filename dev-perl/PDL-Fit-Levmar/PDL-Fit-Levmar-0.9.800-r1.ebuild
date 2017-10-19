@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -19,11 +19,11 @@ RDEPEND="dev-perl/PDL
 DEPEND="${RDEPEND}"
 
 PATCHES=(
-	""${FILESDIR}"/${PN}-0.0098-fixes.patch"
+	"${FILESDIR}/${PN}-0.0098-fixes.patch"
 )
 
 src_prepare() {
-    sed -i "/^\$hash{OPTIMIZE}/s/-O3 --unroll-loops/${CFLAGS}/" Makefile.PL || die
+	sed -i "/^\$hash{OPTIMIZE}/s/-O3 --unroll-loops/${CFLAGS}/" Makefile.PL || die
 	perl-module_src_prepare
 }
 
