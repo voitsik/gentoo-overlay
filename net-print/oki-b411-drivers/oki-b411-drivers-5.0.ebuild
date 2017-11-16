@@ -1,8 +1,7 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI=5
+EAPI=6
 
 MY_PN="MB400PCL"
 
@@ -15,14 +14,15 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND=""
 RDEPEND="net-print/cups"
+DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${MY_PN}"
 
 src_prepare() {
-	sed -i -e 's:/usr/lib/cups/filter/rastertohp:/usr/libexec/cups/filter/rastertohp:' \
-		rastertookimonochrome || die 'Sed failed!'
+	rastertohp="$(cups-config --serverbin)/filter/rastertohp"
+	sed -i -e "s:/usr/lib/cups/filter/rastertohp:$rastertohp:" \
+		rastertookimonochrome || die 'sed failed!'
 }
 
 src_install() {
