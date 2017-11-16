@@ -23,6 +23,7 @@ src_prepare() {
 	rastertohp="$(cups-config --serverbin)/filter/rastertohp"
 	sed -i -e "s:/usr/lib/cups/filter/rastertohp:$rastertohp:" \
 		rastertookimonochrome || die 'sed failed!'
+	default
 }
 
 src_install() {
