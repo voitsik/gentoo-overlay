@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<maintainer type="person">
-	<email>voitsik@asc.rssi.ru</email>
-</maintainer>
-<longdescription lang="en">
+    <maintainer type="person">
+        <email>voitsik@asc.rssi.ru</email>
+    </maintainer>
+    <longdescription lang="en">
  Fv is the easy to use graphical program for viewing and editing any FITS 
  format image or table. The Fv software is small, completely self-contained 
  and ready to run on
@@ -14,5 +14,5 @@
  Fv can be used with the DS9 image display.
  This is the binary version (source version has a lot of source
  bundling issues).
-</longdescription>
+    </longdescription>
 </pkgmetadata>
