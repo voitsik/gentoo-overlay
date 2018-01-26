@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -68,7 +68,6 @@ src_unpack() {
 }
 
 src_prepare() {
-
 	eapply_user
 
 	rm -vf libbz2* libpopt.so.0 libpng12.so.0 || die

@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -75,6 +75,7 @@ src_prepare() {
 	rm -vf libdrm.so.2 libffi.so.6 libGL.so.1 libX11* || die
 	# rm -vf libQt5* libicu* qt.conf || die
 	# rm -vrf wmctrl plugins/ || die
+	rm -vf libicu* || die
 	rm -vf wmctrl || die
 	if use X ; then
 		mv images/hicolor/16x16/status "${T}" || die
