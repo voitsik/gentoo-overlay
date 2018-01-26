@@ -75,7 +75,6 @@ src_prepare() {
 	rm -vf libdrm.so.2 libffi.so.6 libGL.so.1 libX11* || die
 	# rm -vf libQt5* libicu* qt.conf || die
 	# rm -vrf wmctrl plugins/ || die
-	rm -vf libicu* || die
 	rm -vf wmctrl || die
 	if use X ; then
 		mv images/hicolor/16x16/status "${T}" || die
