@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python2_7 python3_5 python3_6 )
+PYTHON_COMPAT=( python2_7 )
 inherit eutils gnome2-utils pax-utils systemd python-single-r1
 
 DESCRIPTION="Dropbox daemon (pretends to be GUI-less)"
@@ -92,7 +92,7 @@ src_install() {
 
 	insinto "${targetdir}"
 	doins -r *
-	fperms a+x "${targetdir}"/{dropbox,dropbox_py3,dropboxd}
+	fperms a+x "${targetdir}"/{dropbox,dropboxd}
 	dosym "${targetdir}/dropboxd" "/opt/bin/dropbox"
 
 	use X && doicon -s 16 -c status "${T}"/status
