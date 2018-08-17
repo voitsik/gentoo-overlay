@@ -11,7 +11,7 @@ SRC_URI="ftp://ftp.astro.caltech.edu/pub/difmap/${PN}${PV}.tar.gz"
 
 LICENSE="icu"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE="doc"
 
 DEPEND="sci-libs/pgplot
