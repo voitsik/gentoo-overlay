@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+    <maintainer type="person">
+        <name>Petr Voytsik</name>
+        <email>voitsik@asc.rssi.ru</email>
+    </maintainer>
+    <longdescription lang="en">
+    Difmap is a program developed for synthesis imaging of visibility 
+    data from interferometer arrays of radio telescopes world-wide. 
+    Its prime advantages over traditional packages, are its emphasis 
+    on interactive processing, speed, and the use of Difference mapping techniques.
+    </longdescription>
+</pkgmetadata>

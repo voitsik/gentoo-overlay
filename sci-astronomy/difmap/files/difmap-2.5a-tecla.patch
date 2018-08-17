@@ -1,0 +1,30 @@
+--- uvf_difmap/configure	2010-04-22 08:33:37.000000000 +0400
++++ uvf_difmap_2.5a/configure	2018-08-18 00:33:18.963663188 +0300
+@@ -396,14 +397,6 @@
+ echo ' RANLIB       =' $RANLIB
+ echo ' PAGER        =' $PAGER
+ echo ' PGBIND_FLAGS =' $PGBIND_FLAGS
+-if [ "$USE_TECLA" = "1" ] ; then
+-  echo ' USE_TECLA = yes'
+-  TECLA_DEPEND="$LIBDIR/libtecla.a $INCDIR/libtecla.h"
+-else
+-  echo ' USE_TECLA = no'
+-  TECLA_LIB=""
+-  TECLA_DEPEND=""
+-fi
+ if [ "$HIDE_SCRATCH_FILES" = "1" ] ; then
+   echo ' HIDE_SCRATCH_FILES = yes'
+ else
+@@ -526,12 +519,3 @@
+ cat make.configure fits_src/makefile.distrib > fits_src/makefile
+ cat make.configure slalib_src/makefile.distrib > slalib_src/makefile
+ \rm make.configure
+-
+-# Make the tecla library?
+-
+-if [ "$USE_TECLA" = "1" ] ; then
+-  (cd libtecla_src; ./configure --without-man-pages)
+-  touch libtecla_src/needed
+-else
+-  rm -f libtecla_src/needed
+-fi
