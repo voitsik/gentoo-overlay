@@ -14,13 +14,17 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc"
 
-DEPEND="sci-libs/pgplot
+RDEPEND="sci-libs/pgplot
 	dev-libs/libtecla"
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}
+	doc? ( dev-tex/latexmk )"
 
 S="${WORKDIR}/uvf_difmap"
 
-PATCHES=( "${FILESDIR}/${P}-tecla.patch" )
+PATCHES=(
+	"${FILESDIR}/${P}-tecla.patch"
+	"${FILESDIR}/${P}-makemanual.patch"
+	)
 
 HELP_DIR="/usr/share/${PN}"
 
@@ -30,11 +34,13 @@ src_prepare() {
 	sed -i -e 's/$OPT/"$OPT"/g' \
 	       -e "/^OPT=/s/-O/${CFLAGS}/" makeall || die
 
-	sed -i -e "s/f77/$(tc-getFC)/" \
-		   -e "/^FFLAGS=/s/-O/${FFLAGS}/" \
-	       -e "s/CC=gcc/CC=$(tc-getCC)/" \
-		   -e "s:\(HELPDIR=\).*:\1${HELP_DIR}/help:" configure || die
+	sed -e "s/f77/$(tc-getFC)/" \
+		-e "/^FFLAGS=/s/-O/${FFLAGS}/" \
+		-e "s/CC=gcc/CC=$(tc-getCC)/" \
+		-e "s:\(HELPDIR=\).*:\1${HELP_DIR}/help:" \
+		-i configure || die
 
+	# We use system libtecla
 	rm -rf libtecla_src || die
 }
 
@@ -44,6 +50,8 @@ src_configure() {
 
 src_compile() {
 	./makeall
+
+	use doc && (cd doc/; ./makemanual)
 }
 
 src_install() {
@@ -53,4 +61,5 @@ src_install() {
 	doins -r help
 
 	dodoc README change_details
+	use doc && dodoc doc/help.pdf
 }

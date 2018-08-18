@@ -1,0 +1,31 @@
+--- uvf_difmap/doc/makemanual	2006-09-22 03:33:05.000000000 +0400
++++ uvf_difmap_2.5a/doc/makemanual	2018-08-18 23:25:35.998697119 +0300
+@@ -190,26 +190,5 @@
+ 
+ # Run latex on the compiled file.
+ 
+-cat << EOF
+-
+-  makemanual will now run latex on help.tex to generate help.dvi.
+-  Latex will be run twice. On the first pass, latex will generate lots
+-  of warnings about undefined labels. These will be resolved by the
+-  second pass.
+-
+-EOF
+-sleep 5
+-
+-latex help.tex
+-
+-cat << EOF
+-
+-  Re-running latex to resolve page references.
+-
+-EOF
+-
+-latex help.tex
+-
+-# Delete temporary files.
+-
+-\rm -f help.aux help.log
++latexmk -silent -pdf help.tex
++latexmk -c
