@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export TIX_LIBRARY='/usr/lib64/Tix8.4.3'
+
+exec /opt/fv/fv $@
