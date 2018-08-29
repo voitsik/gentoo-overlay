@@ -97,7 +97,7 @@ src_install() {
 
 	use X && doicon -s 16 -c status "${T}"/status
 
-	make_desktop_entry "${PN}" "Dropbox"
+	make_desktop_entry "${PN}" "Dropbox" "dropboxstatus-logo"
 
 	newinitd "${FILESDIR}"/dropbox.initd dropbox
 	newconfd "${FILESDIR}"/dropbox.conf dropbox
