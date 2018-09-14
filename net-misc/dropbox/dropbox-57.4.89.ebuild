@@ -3,8 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python2_7 )
-inherit eutils gnome2-utils pax-utils systemd python-single-r1
+inherit eutils gnome2-utils pax-utils systemd
 
 DESCRIPTION="Dropbox daemon (pretends to be GUI-less)"
 HOMEPAGE="http://dropbox.com/"
