@@ -22,8 +22,8 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/uvf_difmap"
 
 PATCHES=(
-	"${FILESDIR}/${P}-tecla.patch"
-	"${FILESDIR}/${P}-makemanual.patch"
+	"${FILESDIR}/${PN}-2.5a-tecla.patch"
+	"${FILESDIR}/${PN}-2.5a-makemanual.patch"
 	)
 
 HELP_DIR="/usr/share/${PN}"
