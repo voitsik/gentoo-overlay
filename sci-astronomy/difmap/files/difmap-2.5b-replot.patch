@@ -1,0 +1,21 @@
+diff -ur uvf_difmap-2.5b/difmap_src/maplot.c uvf_difmap-2.5b-r1/difmap_src/maplot.c
+--- uvf_difmap-2.5b/difmap_src/maplot.c	2018-11-25 06:52:44.000000000 +0300
++++ uvf_difmap-2.5b-r1/difmap_src/maplot.c	2019-01-22 18:48:20.742816030 +0300
+@@ -1070,6 +1070,8 @@
+ 	  printf("Contrast and brightness reset.\n");
+ 	};
+ 	recolor(ctab->cmap, ctab->contra, ctab->bright);
++	if(replot(mp))
++	    return 1;
+       };
+       break;
+     case KEY_UNMARK:  /* Delete the nearest marker */
+@@ -1629,7 +1631,7 @@
+  */
+   snprintf(buf1, sizeof(buf1), "Relative Declination  (%s)", mapunits(U_PLAB));
+   cpgmtxt("L", primsep, 0.5f, 0.5f, buf1);
+-  snprintf(buf1, sizeof(buf1), "Right Ascension  (%s)", mapunits(U_PLAB));
++  snprintf(buf1, sizeof(buf1), "Relative Right Ascension  (%s)", mapunits(U_PLAB));
+   cpgmtxt("B", primsep, 0.5f, 0.5f, buf1);
+ /*
+  * Proceed with the extra labels beneath the plot.
