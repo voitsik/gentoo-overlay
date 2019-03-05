@@ -18,6 +18,7 @@ RDEPEND="
 	x11-libs/libX11
 	x11-libs/libXft
 	x11-libs/libXScrnSaver
+	x11-libs/xpa
 	~dev-tcltk/tix-8.4.3"
 DEPEND=""
 
