@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>voitsik@asc.rssi.ru</email>
+		<name>Petr Voytsik</name>
+	</maintainer>
+	<longdescription lang="en">
+	Statistics::R is a module to controls the R interpreter (R project for 
+	statistical computing: http://www.r-project.org/). It lets you start R, 
+	pass commands to it and retrieve their output. A shared mode allows 
+	several instances of Statistics::R to talk to the same R process.
+	</longdescription>
+</pkgmetadata>
