@@ -37,7 +37,7 @@ python_prepare_all() {
 	# workaround until failing test is fixed
 	local PATCHES=(
 		"${FILESDIR}"/${PN}-0.6.24-skip-test.patch
-		"${FILESDIR}"/${P}-lftp.patch
+		"${FILESDIR}"/${PN}-0.7.17-lftp.patch
 	)
 
 	distutils-r1_python_prepare_all
