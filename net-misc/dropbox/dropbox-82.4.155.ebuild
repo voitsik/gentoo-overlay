@@ -69,7 +69,7 @@ src_unpack() {
 src_prepare() {
 	eapply_user
 
-	rm -vf libGL.so.1 libX11* libdrm.so.2 libffi.so.6 libpopt.so.0 wmctrl || die
+	rm -vf libGL.so.1 libX11* libdrm.so.2 libpopt.so.0 wmctrl || die
 	# tray icon doesnt load when removing libQt5* (bug 641416)
 	#rm -vrf libQt5* libicu* qt.conf plugins/ || die
 	if use X ; then
