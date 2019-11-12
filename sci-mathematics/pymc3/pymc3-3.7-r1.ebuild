@@ -1,9 +1,9 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-PYTHON_COMPAT=( python{2_7,3_5,3_6} )
+PYTHON_COMPAT=( python{3_5,3_6} )
 
 inherit distutils-r1 virtualx xdg-utils
 
@@ -18,23 +18,16 @@ SLOT=0
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 LICENSE="AFL-3.0"
 
-IUSE="test"
+IUSE="hdf5 test"
 
 RDEPEND="
-	<=dev-python/commonmark-0.5.4[${PYTHON_USEDEP}]
-	>=dev-python/joblib-0.9[${PYTHON_USEDEP}]
+	hdf5? ( dev-python/h5py[${PYTHON_USEDEP}] )
 	>=dev-python/numpy-1.13[${PYTHON_USEDEP},lapack]
-	>=dev-python/matplotlib-1.5[${PYTHON_USEDEP}]
-	dev-python/nbsphinx[${PYTHON_USEDEP}]
-	dev-python/numpydoc[${PYTHON_USEDEP}]
 	>=dev-python/pandas-0.18[${PYTHON_USEDEP}]
 	>=dev-python/patsy-0.4[${PYTHON_USEDEP}]
-	>=dev-python/recommonmark-0.4[${PYTHON_USEDEP}]
-	dev-python/sphinx[${PYTHON_USEDEP}]
 	>=dev-python/theano-1.0.4[${PYTHON_USEDEP}]
 	>=dev-python/tqdm-4.8.4[${PYTHON_USEDEP}]
 	>=sci-libs/scipy-0.18.1[${PYTHON_USEDEP}]
-	virtual/python-enum34[${PYTHON_USEDEP}]
 "
 DEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
@@ -43,6 +36,11 @@ DEPEND="
 		${RDEPEND}
 		dev-python/nose[${PYTHON_USEDEP}]
 		dev-python/nose-parameterized[${PYTHON_USEDEP}]
+		>=dev-python/matplotlib-1.5[${PYTHON_USEDEP}]
+		dev-python/nbsphinx[${PYTHON_USEDEP}]
+		dev-python/numpydoc[${PYTHON_USEDEP}]
+		>=dev-python/recommonmark-0.4[${PYTHON_USEDEP}]
+		dev-python/sphinx[${PYTHON_USEDEP}]
 	)
 "
 
