@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{2_7,3_5,3_6,3_7} )
+PYTHON_COMPAT=( python{3_5,3_6,3_7} )
 
 inherit eutils distutils-r1 xdg-utils
 
@@ -32,12 +32,11 @@ RDEPEND="
 	dev-python/pyflakes[${PYTHON_USEDEP}]
 	dev-python/pygments[${PYTHON_USEDEP}]
 	dev-python/pylint[${PYTHON_USEDEP}]
-	dev-python/PyQt5[${PYTHON_USEDEP},svg,webkit?]
 	dev-python/pyzmq[${PYTHON_USEDEP}]
 	>=dev-python/qtawesome-0.4.1[${PYTHON_USEDEP}]
 	dev-python/qtconsole[${PYTHON_USEDEP}]
 	dev-python/QtPy[${PYTHON_USEDEP},svg,webengine?,webkit?]
-	>=dev-python/rope-0.10.7[${PYTHON_USEDEP}]
+	>=dev-python/rope-0.10.5[${PYTHON_USEDEP}]
 	dev-python/sphinx[${PYTHON_USEDEP}]
 	dev-python/numpydoc[${PYTHON_USEDEP}]
 	<dev-python/spyder-kernels-1.0"
