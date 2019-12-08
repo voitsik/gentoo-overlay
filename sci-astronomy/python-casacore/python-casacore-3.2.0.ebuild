@@ -30,8 +30,6 @@ BDEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
 "
 
-PATCHES=( "${FILESDIR}"/${P}-fix-find-boost.patch )
-
 python_test() {
 	nosetests --with-coverage --cover-package=casacore --verbose tests || die "Tests fail with ${EPYTHON}"
 }
