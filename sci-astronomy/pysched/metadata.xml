@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<name>Petr Voytsik</name>
+		<email>voitsik@asc.rssi.ru</email>
+	</maintainer>
+	<longdescription>
+	PySCHED is a Python wrapper developed by JIVE. The advantage of PySCHED 
+	over SCHED lies on the fact that PySCHED will take the latest frequency 
+	setup for your experiment without need to copy the information sent by 
+	JIVE.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">jive-vlbi/sched</remote-id>
+	</upstream>
+</pkgmetadata>
