@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<name>Petr Voytsik</name>
+		<email>voitsik@asc.rssi.ru</email>
+	</maintainer>
+	<longdescription lang="en">
+	This wrapper provides a somewhat Pythonic access to some of the core 
+	NFFT library functionalities and is largely inspired from the pyFFTW 
+	project developped by Henry Gomersall
+	</longdescription>
+	<upstream>
+		<remote-id type="pypi">pyNFFT</remote-id>
+		<remote-id type="github">pyNFFT/pyNFFT</remote-id>
+	</upstream>
+</pkgmetadata>
