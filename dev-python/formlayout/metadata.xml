@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<name>Petr Voytsik</name>
+		<email>voitsik@asc.rssi.ru</email>
+	</maintainer>
+	<longdescription lang="en">
+	Graphical user interface (GUI) libraries are usually designed to address 
+	issues which are far more complex than a simple dialog box. As a consequence, 
+	creating simple forms and dialogs is generally not as easy as it should be: 
+	for simple data input dialogs the feature to SLOC ratio is very low.
+
+	formlayout tries to solve this problem by providing the absolute minimum 
+	API required to create the form dialog boxes. To show a dialog box, simply 
+	call the fedit function. To setup a dialog box, use lists to pass the 
+	required parameters (field names, default values, etc...).
+	</longdescription>
+	<upstream>
+		<remote-id type="pypi">formlayout</remote-id>
+		<remote-id type="github">igrekus/formlayout</remote-id>
+	</upstream>
+</pkgmetadata>
