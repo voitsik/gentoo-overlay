@@ -19,6 +19,8 @@ KEYWORDS="~amd64 ~x86"
 
 RDEPEND="sci-libs/nfft[openmp]"
 DEPEND="${RDEPEND}
+	dev-python/cython[${PYTHON_USEDEP}]
+	dev-python/numpy[${PYTHON_USEDEP}]
 	test? ( dev-python/nose[${PYTHON_USEDEP}] )
 "
 
