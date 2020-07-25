@@ -18,7 +18,7 @@ IUSE="test"
 
 RDEPEND="
 	dev-libs/boost:0=[python,${PYTHON_USEDEP}]
-	>=sci-astronomy/casacore-3.2.0[${PYTHON_USEDEP}]
+	>=sci-astronomy/casacore-3.2.0[python,${PYTHON_USEDEP}]
 "
 DEPEND="${DEPEND}
 	test? (
