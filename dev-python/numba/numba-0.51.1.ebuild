@@ -21,7 +21,7 @@ IUSE="openmp threads"
 DEPEND="
 	>=dev-python/llvmlite-0.33.0[${PYTHON_USEDEP}]
 	<=dev-python/llvmlite-0.34.0
-	<dev-python/numpy-1.19[${PYTHON_USEDEP}]
+	dev-python/numpy[${PYTHON_USEDEP}]
 	dev-python/pip[${PYTHON_USEDEP}]
 	threads? ( dev-cpp/tbb )
 "
@@ -39,9 +39,8 @@ distutils_enable_tests unittest
 
 # doc system is another huge mess, skip it
 PATCHES=(
-	"${FILESDIR}/${P}-tbb-check.patch"
-	"${FILESDIR}/${P}-assertLessEqual.patch"
-	"${FILESDIR}/${P}-long_no_truncate.patch"
+	"${FILESDIR}/${PN}-0.50.0-assertLessEqual.patch"
+	"${FILESDIR}/${PN}-0.50.0-long_no_truncate.patch"
 )
 
 # no parallel compile, ironic
