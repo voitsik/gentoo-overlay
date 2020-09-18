@@ -18,7 +18,7 @@ KEYWORDS="~amd64"
 BDEPEND=""
 RDEPEND="
 	dev-python/numpy[${PYTHON_USEDEP}]
-	sci-libs/scipy[${PYTHON_USEDEP}]
+	dev-python/scipy[${PYTHON_USEDEP}]
 	dev-python/astropy[${PYTHON_USEDEP}]
 	dev-python/matplotlib[${PYTHON_USEDEP}]
 	sci-astronomy/pyephem[${PYTHON_USEDEP}]

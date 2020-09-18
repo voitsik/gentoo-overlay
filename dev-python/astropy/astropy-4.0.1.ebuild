@@ -28,7 +28,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}
 	dev-libs/libxml2[${PYTHON_USEDEP}]
-	sci-libs/scipy[${PYTHON_USEDEP}]
+	dev-python/scipy[${PYTHON_USEDEP}]
 	sys-libs/zlib:0=
 "
 BDEPEND="

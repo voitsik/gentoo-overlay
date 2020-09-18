@@ -30,7 +30,7 @@ RDEPEND="${DEPEND}
 "
 BDEPEND="
 	test? (
-		sci-libs/scipy[${PYTHON_USEDEP}]
+		dev-python/scipy[${PYTHON_USEDEP}]
 	)
 "
 
@@ -73,6 +73,6 @@ python_install_all() {
 }
 
 pkg_postinst() {
-	optfeature "support for linear algebra" sci-libs/scipy
+	optfeature "support for linear algebra" dev-python/scipy
 	optfeature "compile cuda code" dev-util/nvidia-cuda-sdk
 }

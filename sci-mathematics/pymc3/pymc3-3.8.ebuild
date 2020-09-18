@@ -25,7 +25,7 @@ RDEPEND="
 	>=dev-python/numpy-1.13[${PYTHON_USEDEP},lapack]
 	>=dev-python/pandas-0.18[${PYTHON_USEDEP}]
 	>=dev-python/patsy-0.4[${PYTHON_USEDEP}]
-	>=sci-libs/scipy-0.18.1[${PYTHON_USEDEP}]
+	>=dev-python/scipy-0.18.1[${PYTHON_USEDEP}]
 	>=dev-python/theano-1.0.4[${PYTHON_USEDEP}]
 	>=dev-python/tqdm-4.8.4[${PYTHON_USEDEP}]
 "
