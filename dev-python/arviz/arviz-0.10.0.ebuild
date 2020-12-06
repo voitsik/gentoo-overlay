@@ -27,7 +27,6 @@ RDEPEND="
 BDEPEND="
 	test? (
 		${RDEPEND}
-		>=dev-python/bokeh-1.4.0[${PYTHON_USEDEP}]
 	)
 "
 
