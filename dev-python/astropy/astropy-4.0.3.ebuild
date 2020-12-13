@@ -43,13 +43,12 @@ BDEPEND="
 		dev-python/pyyaml[${PYTHON_USEDEP}]
 		>=dev-python/sphinx-1.7[${PYTHON_USEDEP}]
 		dev-python/sphinx-gallery[${PYTHON_USEDEP}]
-		sci-libs/scikits_image[${PYTHON_USEDEP}]
+		sci-libs/scikit-image[${PYTHON_USEDEP}]
 	)
 	test? (
 		${RDEPEND}
 		dev-python/objgraph[${PYTHON_USEDEP}]
 		dev-python/pytest[${PYTHON_USEDEP}]
-		dev-python/pytest-mpl[${PYTHON_USEDEP}]
 		dev-python/pytest-xdist[${PYTHON_USEDEP}]
 	)
 "
@@ -87,7 +86,7 @@ pkg_postinst() {
 	optfeature "To specify and convert between timezones"										dev-python/pytz
 	optfeature "To retrieve JPL ephemeris of Solar System objects"								dev-python/jplephem
 	optfeature "To provide plotting functionality that astropy.visualization enhances"			dev-python/matplotlib
-	optfeature "To downsample a data array in astropy.nddata.utils"								sci-libs/scikits_image
+	optfeature "To downsample a data array in astropy.nddata.utils"								sci-libs/scikit-image
 	optfeature "Used for the kraft-burrows-nousek interval in poisson_conf_interval"			dev-python/mpmath
 	optfeature "read/write Table objects from/to HDF5 files"									dev-python/h5py
 }
