@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>sci-astronomy@gentoo.org</email>
+		<name>Gentoo Astronomy Project</name>
+	</maintainer>
+	<longdescription lang="en">
+	PyERFA is the Python wrapper for the ERFA library (Essential Routines for 
+	Fundamental Astronomy), a C library containing key algorithms for astronomy, 
+	which is based on the SOFA library published by the International Astronomical 
+	Union (IAU). All C routines are wrapped as Numpy universal functions, so that 
+	they can be called with scalar or array inputs.
+	</longdescription>
+	<upstream>
+		<remote-id type="pypi">pyerfa</remote-id>
+		<remote-id type="github">liberfa/pyerfa</remote-id>
+	</upstream>
+</pkgmetadata>
