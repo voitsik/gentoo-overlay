@@ -2,8 +2,8 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
-		<name>Petr Voytsik</name>
-		<email>voitsik@asc.rssi.ru</email>
+		<name>Petr Voitsik</name>
+		<email>voitsik@gmail.com</email>
 	</maintainer>
 	<longdescription lang="en">
 	This wrapper provides a somewhat Pythonic access to some of the core 

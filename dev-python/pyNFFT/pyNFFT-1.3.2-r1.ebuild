@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7,8} )
+PYTHON_COMPAT=( python3_{7..9} )
 
 inherit distutils-r1
 
@@ -18,7 +18,7 @@ RESTRICT="!test? ( test )"
 KEYWORDS="~amd64 ~x86"
 
 RDEPEND="sci-libs/nfft[openmp]"
-DEPEND="${RDEPEND}
+BDEPEND="${RDEPEND}
 	dev-python/cython[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
 	test? ( dev-python/nose[${PYTHON_USEDEP}] )
