@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>voitsik@asc.rssi.ru</email>
+		<name>Petr Voitsik</name>
+	</maintainer>
+	<longdescription lang="en">
+	This package contains a plugin for the pytest framework that provides advanced 
+	doctest support and enables the testing of reStructuredText (".rst") files. 
+	It was originally part of the astropy core package, but has been moved to a 
+	separate package in order to be of more general use.
+	</longdescription>
+	<upstream>
+		<remote-id type="pypi">pytest-doctestplus</remote-id>
+		<remote-id type="github">astropy/pytest-doctestplus</remote-id>
+	</upstream>
+</pkgmetadata>
