@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>voitsik@asc.rssi.ru</email>
+		<name>Petr Voitsik</name>
+	</maintainer>
+	<longdescription lang="en">
+	This package provides a plugin for the pytest framework that allows developers 
+	to control unit tests that require access to data from the internet. It was 
+	originally part of the astropy core package, but has been moved to a separate 
+	package in order to be of more general use.
+	</longdescription>
+	<upstream>
+		<remote-id type="pypi">pytest-remotedata</remote-id>
+		<remote-id type="github">astropy/pytest-remotedata</remote-id>
+	</upstream>
+</pkgmetadata>
