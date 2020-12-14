@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>voitsik@asc.rssi.ru</email>
+		<name>Petr Voitsik</name>
+	</maintainer>
+	<longdescription lang="en">
+	The extension-helpers package includes convenience helpers to assist with 
+	building Python packages with compiled C/Cython extensions. It is developed 
+	by the Astropy project but is intended to be general and usable by any Python 
+	package.
+	</longdescription>
+	<upstream>
+		<remote-id type="pypi">extension-helpers</remote-id>
+		<remote-id type="github">astropy/extension-helpers</remote-id>
+	</upstream>
+</pkgmetadata>
