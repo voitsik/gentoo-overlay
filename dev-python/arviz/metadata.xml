@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <maintainer type="person">
-    <email>voitsik@asc.rssi.ru</email>
-    <name>Petr Voytsik</name>
-  </maintainer>
-  <longdescription lang="en">
-  ArviZ (pronounced "AR-vees") is a Python package for exploratory analysis of 
-  Bayesian models. Includes functions for posterior analysis, model checking, 
-  comparison and diagnostics.
-  </longdescription>
-  <upstream>
-    <remote-id type="pypi">arviz</remote-id>
-    <remote-id type="github">arviz-devs/arviz</remote-id>
-  </upstream>
+	<maintainer type="person">
+		<email>voitsik@gmail.com</email>
+		<name>Petr Voitsik</name>
+	</maintainer>
+	<longdescription lang="en">
+	ArviZ (pronounced "AR-vees") is a Python package for exploratory analysis of 
+	Bayesian models. Includes functions for posterior analysis, model checking, 
+	comparison and diagnostics.
+	</longdescription>
+	<upstream>
+		<remote-id type="pypi">arviz</remote-id>
+		<remote-id type="github">arviz-devs/arviz</remote-id>
+	</upstream>
 </pkgmetadata>
