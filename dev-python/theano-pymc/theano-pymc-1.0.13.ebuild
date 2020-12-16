@@ -25,7 +25,10 @@ RDEPEND="
 	dev-python/scipy[sparse,${PYTHON_USEDEP}]
 "
 BDEPEND="
-	test? ( ${RDEPEND} )
+	test? (
+		${RDEPEND}
+		dev-python/pydot[${PYTHON_USEDEP}]
+	)
 "
 
 distutils_enable_tests pytest
@@ -45,6 +48,6 @@ python_test() {
 }
 
 pkg_postinst() {
-	optfeature "making picture of Theano computation graph" dev-python/pydot-ng
+	optfeature "making picture of Theano computation graph" dev-python/pydot
 	optfeature "GPU/CPU code generation" dev-python/pygpu
 }
