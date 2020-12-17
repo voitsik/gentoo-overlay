@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_{7..9} )
 
-inherit distutils-r1
+inherit distutils-r1 optfeature
 
 MYP=${P/_}
 S="${WORKDIR}/${MYP}"
