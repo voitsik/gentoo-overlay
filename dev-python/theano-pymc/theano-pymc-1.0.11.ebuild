@@ -21,6 +21,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 RDEPEND="
+	!dev-python/theano
 	dev-python/numpy[${PYTHON_USEDEP}]
 	dev-python/scipy[sparse,${PYTHON_USEDEP}]
 "
