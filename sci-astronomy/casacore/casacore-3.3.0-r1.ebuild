@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,9 +6,9 @@ EAPI=7
 # ninja does not work due to fortran
 CMAKE_MAKEFILE_GENERATOR=emake
 
-PYTHON_COMPAT=( python2_7 python3_{5,6,7} )
+PYTHON_COMPAT=( python3_{6..9} )
 
-inherit cmake-utils eutils toolchain-funcs fortran-2 python-r1
+inherit cmake eutils toolchain-funcs fortran-2 python-r1
 
 DESCRIPTION="Core libraries for the Common Astronomy Software Applications"
 HOMEPAGE="https://github.com/casacore/casacore"
@@ -53,7 +53,7 @@ pkg_pretend() {
 }
 
 src_prepare() {
-	cmake-utils_src_prepare
+	cmake_src_prepare
 	sed -e '/python-py/s/^.*$/find_package(Boost REQUIRED COMPONENTS python)/' \
 		-i python3/CMakeLists.txt || die
 }
@@ -69,33 +69,22 @@ src_configure() {
 		-DUSE_HDF5="$(usex hdf5)"
 		-DUSE_OPENMP="$(usex openmp)"
 		-DUSE_THREADS="$(usex threads)"
+		-DPYTHON3_EXECUTABLE="${PYTHON}"
+		-DBUILD_PYTHON3=ON
 	)
-	python_set_options() {
-		if python_is_python3; then
-			mycmakeargs+=(
-				-DPYTHON3_EXECUTABLE="${PYTHON}"
-				-DBUILD_PYTHON3=ON
-			)
-		else
-			mycmakeargs+=(
-				-DPYTHON2_EXECUTABLE="${PYTHON}"
-				-DBUILD_PYTHON=ON
-			)
-		fi
-	}
 	use python && python_foreach_impl python_set_options
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_compile() {
-	cmake-utils_src_compile
+	cmake_src_compile
 	if use doc; then
 		doxygen doxygen.cfg || die
 	fi
 }
 
 src_install(){
-	cmake-utils_src_install
+	cmake_src_install
 	if use doc; then
 		insinto /usr/share/doc/${PF}
 		doins -r doc/html
