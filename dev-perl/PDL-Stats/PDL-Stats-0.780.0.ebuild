@@ -3,15 +3,14 @@
 
 EAPI=8
 
-MODULE_AUTHOR=ETJ
-MODULE_VERSION=0.78
+DIST_AUTHOR=ETJ
+DIST_VERSION=0.78
 inherit perl-module
 
 DESCRIPTION="A collection of statistics modules in Perl Data Language"
 
 SLOT="0"
 KEYWORDS="~amd64"
-
 IUSE="gsl pgplot"
 
 RDEPEND="
@@ -20,4 +19,6 @@ RDEPEND="
 	pgplot? ( dev-perl/PDL[pgplot] )
 "
 
-DEPEND="${RDEPEND}"
+BDEPEND="${RDEPEND}
+	virtual/perl-ExtUtils-MakeMaker
+"
