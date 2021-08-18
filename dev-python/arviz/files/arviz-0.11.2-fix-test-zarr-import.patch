@@ -1,0 +1,26 @@
+diff -ur arviz-0.11.2.orig/arviz/tests/base_tests/test_data_zarr.py arviz-0.11.2/arviz/tests/base_tests/test_data_zarr.py
+--- arviz-0.11.2.orig/arviz/tests/base_tests/test_data_zarr.py	2021-02-21 22:12:04.000000000 +0300
++++ arviz-0.11.2/arviz/tests/base_tests/test_data_zarr.py	2021-08-19 00:58:02.764624289 +0300
+@@ -1,5 +1,4 @@
+ # pylint: disable=redefined-outer-name
+-import importlib
+ import os
+ import shutil
+ from collections.abc import MutableMapping
+@@ -16,14 +15,10 @@
+     draws,
+     eight_schools_params,
+     running_on_ci,
++    importorskip,
+ )
+ 
+-pytestmark = pytest.mark.skipif(  # pylint: disable=invalid-name
+-    importlib.util.find_spec("zarr") is None and not running_on_ci(),
+-    reason="test requires zarr which is not installed",
+-)
+-
+-import zarr  # pylint: disable=wrong-import-position, wrong-import-order
++zarr = importorskip("zarr")  # pylint: disable=invalid-name
+ 
+ 
+ class TestDataZarr:

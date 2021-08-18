@@ -1,0 +1,30 @@
+diff -ur arviz-0.11.2.orig/arviz/tests/base_tests/test_plots_matplotlib.py arviz-0.11.2/arviz/tests/base_tests/test_plots_matplotlib.py
+--- arviz-0.11.2.orig/arviz/tests/base_tests/test_plots_matplotlib.py   2021-02-21 22:12:04.000000000 +0300
++++ arviz-0.11.2/arviz/tests/base_tests/test_plots_matplotlib.py        2021-08-19 02:07:04.796106981 +0300
+@@ -160,6 +160,7 @@
+         plot_density(obj, hdi_prob=2)
+ 
+ 
++@pytest.mark.skip(reason="test requires internet access")
+ @pytest.mark.parametrize(
+     "kwargs",
+     [
+@@ -200,6 +201,7 @@
+     assert axes.shape
+ 
+ 
++@pytest.mark.skip(reason="test requires internet access")
+ @pytest.mark.parametrize(
+     "compact",
+     [True, False],
+diff -ur arviz-0.11.2.orig/arviz/tests/base_tests/test_stats.py arviz-0.11.2/arviz/tests/base_tests/test_stats.py
+--- arviz-0.11.2.orig/arviz/tests/base_tests/test_stats.py      2021-02-21 22:12:04.000000000 +0300
++++ arviz-0.11.2/arviz/tests/base_tests/test_stats.py   2021-08-19 02:06:18.551247190 +0300
+@@ -591,6 +591,7 @@
+     assert np.all((loo_pit_data >= 0) & (loo_pit_data <= 1))
+ 
+ 
++@pytest.mark.skip(reason="test requires internet access")
+ def test_loo_pit_multi_lik():
+     idata = load_arviz_data("radon")
+     idata.log_likelihood["by_county"] = (
