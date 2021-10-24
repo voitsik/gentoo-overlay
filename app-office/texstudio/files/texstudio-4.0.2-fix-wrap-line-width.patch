@@ -1,0 +1,31 @@
+diff --git a/src/qcodeedit/lib/qeditor.cpp b/src/qcodeedit/lib/qeditor.cpp
+index 98c61672..e65ede80 100644
+--- a/src/qcodeedit/lib/qeditor.cpp
++++ b/src/qcodeedit/lib/qeditor.cpp
+@@ -844,9 +844,9 @@ void QEditor::setSoftLimitedLineWrapping(bool on)
+ }
+ 
+ void QEditor::setWrapLineWidth(qreal l){
+-    m_LineWidth=l;
++    m_LineWidth = qCeil(l);
+     if(flag(HardLineWrap)||flag(LineWidthConstraint))
+-	m_doc->setWidthConstraint(m_LineWidth);
++        m_doc->setWidthConstraint(m_LineWidth);
+ }
+ 
+ void QEditor::setWrapAfterNumChars(int numChars){
+@@ -855,8 +855,12 @@ void QEditor::setWrapAfterNumChars(int numChars){
+ 		setWrapLineWidth(0);
+ 	}
+ 	m_wrapAfterNumChars = qMax(numChars, 20);
+-    qreal w=QFontMetricsF(QDocument::font()).averageCharWidth()*(m_wrapAfterNumChars+0.5) + 5; // +5 fixed width on left side, 0.5: 1/2 a char margin on right side
+-	setWrapLineWidth(w);
++
++    auto fm = QFontMetricsF(QDocument::font());
++    QString str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxy";
++    qreal w = (m_wrapAfterNumChars+0.5) * fm.horizontalAdvance(str) / str.length() + 5; // +5 fixed width on left side, 0.5: 1/2 a char margin on right side
++
++    setWrapLineWidth(w);
+ }
+ 
+ /*!

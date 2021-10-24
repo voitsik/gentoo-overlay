@@ -1,0 +1,22 @@
+diff --git a/src/qcodeedit/lib/document/qdocument.cpp b/src/qcodeedit/lib/document/qdocument.cpp
+index 393d3780..3b041684 100644
+--- a/src/qcodeedit/lib/document/qdocument.cpp
++++ b/src/qcodeedit/lib/document/qdocument.cpp
+@@ -5100,8 +5100,16 @@ bool QDocumentCursorHandle::movePosition(int count, int op, const QDocumentCurso
+ 			}
+ 
+ 
+-			if ( atBlockStart() )
++            if ( atBlockStart() ){
++                l = m_doc->line(line);
++                int target = l.firstChar();
++                if (target > 0) {
++                    offset = target;
++                    refreshColumnMemory();
++                    return true;
++                }
+ 				return false;
++            }
+ 
+ 			if ( m & QDocumentCursor::ThroughWrap && m_doc->line(line).cursorToDocumentOffset(offset).y()==m_doc->line(line).cursorToDocumentOffset(offset-1).y() ){
+                 QPointF p = documentPosition();
