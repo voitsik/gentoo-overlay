@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit desktop qmake-utils xdg
 
@@ -48,8 +48,8 @@ BDEPEND="virtual/pkgconfig"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-3.0.5-quazip1.patch" # TODO: upstream
-	"${FILESDIR}/${P}-fix-wrap-line-width.patch"
-	"${FILESDIR}/${P}-smart-home.patch"
+	"${FILESDIR}/${PN}-4.0.2-fix-wrap-line-width.patch"
+	"${FILESDIR}/${PN}-4.0.2-smart-home.patch"
 )
 
 src_prepare() {
