@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit desktop qmake-utils xdg
+inherit desktop qmake-utils xdg-utils
 
 MY_PV="${PV/_/}"
 DESCRIPTION="Free cross-platform LaTeX editor (fork from texmakerX)"
@@ -53,7 +53,8 @@ PATCHES=(
 )
 
 src_prepare() {
-	xdg_src_prepare
+	xdg_environment_reset
+	default
 
 	# TODO: find hunspell quazip utilities/poppler-data qtsingleapplication -delete || die
 	rm -r src/quazip || die
