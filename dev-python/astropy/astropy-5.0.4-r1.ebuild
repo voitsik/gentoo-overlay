@@ -31,10 +31,10 @@ RDEPEND="${DEPEND}
 BDEPEND="
 	dev-python/extension-helpers[${PYTHON_USEDEP}]
 	>=dev-python/cython-0.29.22[${PYTHON_USEDEP}]
-	<dev-python/jinja-3.1[${PYTHON_USEDEP}]
 	doc? (
 		${RDEPEND}
 		media-gfx/graphviz
+		dev-python/jinja[${PYTHON_USEDEP}]
 		dev-python/pillow[${PYTHON_USEDEP},jpeg(+)]
 		dev-python/pyyaml[${PYTHON_USEDEP}]
 		dev-python/sphinx[${PYTHON_USEDEP}]
