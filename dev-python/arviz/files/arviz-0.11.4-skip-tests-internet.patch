@@ -1,0 +1,19 @@
+diff -ur arviz-0.11.4.orig/arviz/tests/base_tests/test_plots_matplotlib.py arviz-0.11.4/arviz/tests/base_tests/test_plots_matplotlib.py
+--- arviz-0.11.4.orig/arviz/tests/base_tests/test_plots_matplotlib.py	2021-10-03 13:43:26.000000000 +0300
++++ arviz-0.11.4/arviz/tests/base_tests/test_plots_matplotlib.py	2022-07-19 00:08:51.214954489 +0300
+@@ -165,6 +165,7 @@
+         plot_density(obj, hdi_prob=2)
+ 
+ 
++@pytest.mark.skip(reason="test requires internet access")
+ @pytest.mark.parametrize(
+     "kwargs",
+     [
+@@ -205,6 +206,7 @@
+     assert axes.shape
+ 
+ 
++@pytest.mark.skip(reason="test requires internet access")
+ @pytest.mark.parametrize(
+     "compact",
+     [True, False],
