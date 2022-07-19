@@ -1,10 +1,10 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=8
 
-DIST_AUTHOR=JLAPEYRE
-DIST_VERSION=0.0100
+DIST_AUTHOR=ETJ
+DIST_VERSION=0.0106
 inherit perl-module
 
 DESCRIPTION="Levenberg-Marquardt fit/optimization routines for PDL"
@@ -17,10 +17,6 @@ IUSE="lapack"
 RDEPEND="dev-perl/PDL
 	lapack? ( virtual/lapack )"
 DEPEND="${RDEPEND}"
-
-PATCHES=(
-	"${FILESDIR}/${PN}-0.0100-fixes.patch"
-)
 
 src_prepare() {
 	sed -i "/^\$hash{OPTIMIZE}/s/-O3 --unroll-loops/${CFLAGS}/" Makefile.PL || die
