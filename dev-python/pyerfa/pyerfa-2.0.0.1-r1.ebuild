@@ -3,7 +3,8 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..10} )
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{8..11} )
 
 inherit distutils-r1
 
@@ -39,9 +40,7 @@ python_prepare_all() {
 }
 
 python_test() {
-	distutils_install_for_testing --via-root
+	cd "${BUILD_DIR}/install$(python_get_sitedir)" || die
 
-	cd "${TEST_DIR}/lib" || die
-
-	pytest -vv -x || die "Tests failed with ${EPYTHON}"
+	epytest
 }
