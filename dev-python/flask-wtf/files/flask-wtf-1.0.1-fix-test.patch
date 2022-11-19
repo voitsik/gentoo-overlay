@@ -1,0 +1,28 @@
+From 36a53fadf7bc42c79a1428657531961ec30ca003 Mon Sep 17 00:00:00 2001
+From: Anthony Roussel <anthony@roussel.dev>
+Date: Sat, 10 Sep 2022 15:08:51 +0200
+Subject: [PATCH] Fix failing test with Flask 2.2
+
+---
+ tests/test_form.py | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/tests/test_form.py b/tests/test_form.py
+index 2c2cbd3d..03d0c91f 100644
+--- a/tests/test_form.py
++++ b/tests/test_form.py
+@@ -109,8 +109,6 @@ def default():
+         assert not form.validate_on_submit()
+         assert "This field is required." in form.name.errors
+ 
+-    client.post("/default", data={"name": "  "})
+-
+     @app.route("/es", methods=["POST"])
+     def es():
+         app.config["WTF_I18N_ENABLED"] = False
+@@ -128,4 +126,5 @@ class NameForm(MyBaseForm):
+         assert not form.validate_on_submit()
+         assert "Este campo es obligatorio." in form.name.errors
+ 
++    client.post("/default", data={"name": "  "})
+     client.post("/es", data={"name": "  "})
