@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<name>Petr Voitsik</name>
+		<email>voitsik@gmail.com</email>
+	</maintainer>
+	<longdescription lang="en">
+		Generates text from a Python list of variables or will read 
+		a line of text into Python variables according to the FORTRAN 
+		format statement passed.
+	</longdescription>
+	<upstream>
+		<remote-id type="pypi">fortranformat</remote-id>
+		<remote-id type="github">brendanarnold/py-fortranformat</remote-id>
+	</upstream>
+</pkgmetadata>
