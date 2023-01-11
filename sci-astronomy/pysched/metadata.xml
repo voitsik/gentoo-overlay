@@ -12,6 +12,7 @@
 	JIVE.
 	</longdescription>
 	<upstream>
+		<remote-id type="pypi">pythonSCHED</remote-id>
 		<remote-id type="github">jive-vlbi/sched</remote-id>
 	</upstream>
 </pkgmetadata>
