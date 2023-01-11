@@ -1,0 +1,12 @@
+diff -ur formlayout-1.2.0.orig/formlayout.py formlayout-1.2.0/formlayout.py
+--- a/formlayout.py	2020-08-10 12:28:09.000000000 +0300
++++ b/formlayout.py	2023-01-11 12:35:40.083427413 +0300
+@@ -679,7 +679,7 @@
+                                  dialog.float_valid)
+             elif isinstance(value, int):
+                 field = QSpinBox(self)
+-                field.setRange(-1e9, 1e9)
++                field.setRange(int(-1e9), int(1e9))
+                 field.setValue(value)
+             elif isinstance(value, datetime.datetime):
+                 field = QDateTimeEdit(self)
