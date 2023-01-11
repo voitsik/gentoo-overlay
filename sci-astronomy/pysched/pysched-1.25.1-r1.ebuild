@@ -24,6 +24,7 @@ RDEPEND="${BDEPEND}
 	dev-python/bottle[${PYTHON_USEDEP}]
 	dev-python/GitPython[${PYTHON_USEDEP}]
 	dev-python/formlayout[${PYTHON_USEDEP}]
+	dev-python/fortranformat[${PYTHON_USEDEP}]
 	dev-python/matplotlib[qt5,${PYTHON_USEDEP}]
 	dev-python/PyQt5[gui,widgets,${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
