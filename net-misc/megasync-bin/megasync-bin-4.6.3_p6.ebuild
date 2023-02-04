@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -9,7 +9,7 @@ MY_P="${PN/-bin/}-${PV/_p/-}"
 
 DESCRIPTION="Easy automated syncing between your computers and your MEGA cloud drive"
 HOMEPAGE="https://mega.nz/sync"
-SRC_URI="https://mega.nz/linux/repo/Arch_Extra/x86_64/${MY_P}-x86_64.pkg.tar.zst"
+SRC_URI="https://mega.nz/linux/MEGAsync/Arch_Extra/x86_64/${MY_P}-x86_64.pkg.tar.zst"
 
 LICENSE="MEGA"
 SLOT="0"
@@ -28,6 +28,7 @@ RDEPEND="
 	dev-qt/qtx11extras:5
 	media-libs/freeimage
 	x11-libs/libxcb
+	virtual/libudev
 "
 
 S="${WORKDIR}"
