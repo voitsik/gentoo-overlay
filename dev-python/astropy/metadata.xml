@@ -12,5 +12,6 @@
 </longdescription>
   <upstream>
     <remote-id type="pypi">astropy</remote-id>
+    <remote-id type="github">astropy/astropy</remote-id>
   </upstream>
 </pkgmetadata>

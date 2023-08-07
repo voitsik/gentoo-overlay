@@ -4,13 +4,16 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{9..11} )
+PYTHON_COMPAT=( python3_{10..11} )
 
-inherit distutils-r1 optfeature
+inherit distutils-r1 optfeature pypi
 
 DESCRIPTION="Core functionality for performing astrophysics with Python"
-HOMEPAGE="https://www.astropy.org/"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+HOMEPAGE="
+	https://www.astropy.org/
+	https://github.com/astropy/astropy
+	https://pypi.org/project/astropy/
+"
 
 LICENSE="BSD"
 SLOT="0"
