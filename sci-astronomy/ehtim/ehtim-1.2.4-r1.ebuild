@@ -3,17 +3,26 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..10} )
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{10..11} )
 
 inherit distutils-r1 optfeature
 
+MY_P="eht-imaging-${PV}"
 DESCRIPTION="Imaging, analysis, and simulation software for radio interferometry"
-HOMEPAGE="https://achael.github.io/eht-imaging/"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+HOMEPAGE="
+	https://achael.github.io/eht-imaging/
+	https://github.com/achael/eht-imaging
+	https://pypi.org/project/ehtim/
+"
+SRC_URI="https://github.com/achael/eht-imaging/archive/v${PV}.tar.gz -> ${P}.gh.tar.gz"
+
+S=${WORKDIR}/${MY_P}
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
+RESTRICT="test"
 
 BDEPEND=""
 RDEPEND="
