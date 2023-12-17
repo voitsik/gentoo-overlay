@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>voitsik@gmail.com</email>
+    <name>Petr Voitsik</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="pypi">xarray-einstats</remote-id>
+    <maintainer status="unknown">
+      <email>arviz.devs@gmail.com</email>
+      <name>ArviZ team</name>
+    </maintainer>
+    <remote-id type="github">arviz-devs/xarray-einstats</remote-id>
+  </upstream>
+</pkgmetadata>
