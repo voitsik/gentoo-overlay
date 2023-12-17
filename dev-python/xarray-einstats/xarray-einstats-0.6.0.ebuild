@@ -18,7 +18,6 @@ SRC_URI="
 	https://github.com/arviz-devs/xarray-einstats/archive/v${PV}.tar.gz
 		-> ${P}.gh.tar.gz
 "
-einfo "${P}"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -31,7 +30,7 @@ RDEPEND="
 "
 BDEPEND="
 	test? (
-		dev-python/hypothesis[${PYTHON_USEDEP}]
+		${RDEPEND}
 	)
 "
 
