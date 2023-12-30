@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>voitsik@gmail.com</email>
+    <name>Petr Voitsik</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="pypi">pytensor</remote-id>
+    <maintainer status="unknown">
+      <name>PyMC Developers</name>
+      <email>pymc.devs@gmail.com</email>
+    </maintainer>
+    <remote-id type="github">pymc-devs/pytensor</remote-id>
+  </upstream>
+</pkgmetadata>
