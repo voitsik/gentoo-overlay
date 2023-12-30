@@ -5,10 +5,6 @@
     <email>voitsik@gmail.com</email>
     <name>Petr Voitsik</name>
   </maintainer>
-  <longdescription lang="en">
-  A fast and simple progress bar for Jupyter Notebook and console. 
-  Created by Sylvain Gugger for fast.ai.
-  </longdescription>
   <upstream>
     <remote-id type="pypi">fastprogress</remote-id>
     <remote-id type="github">fastai/fastprogress</remote-id>
