@@ -18,13 +18,11 @@ HOMEPAGE="
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="test"
-RESTRICT="!test? ( test )"
 KEYWORDS="~amd64 ~x86"
 
 RDEPEND="sci-libs/nfft[openmp]"
 BDEPEND="${RDEPEND}
-	dev-python/cython[${PYTHON_USEDEP}]
+	<dev-python/cython-3[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
 	test? ( dev-python/nose[${PYTHON_USEDEP}] )
 "
