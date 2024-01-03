@@ -1,0 +1,27 @@
+diff -ur formulae-0.5.1.orig/tests/test_poly.py formulae-0.5.1/tests/test_poly.py
+--- formulae-0.5.1.orig/tests/test_poly.py	2023-09-19 13:16:41.000000000 +0300
++++ formulae-0.5.1/tests/test_poly.py	2024-01-03 03:05:38.525333628 +0300
+@@ -50,8 +50,8 @@
+ 
+     assert np.allclose(value[:, 0], r_reference)
+ 
+-    assert pytest.approx(poly.alpha, {0: 0.5})
+-    assert pytest.approx(poly.norms2, {0: 21.0, 2: 1.925})
++    assert poly.alpha == pytest.approx({0: 0.5})
++    assert poly.norms2 == pytest.approx({0: 21.0, 1: 1.925})
+ 
+     assert np.allclose(poly(data)[:, 0], r_reference)
+ 
+@@ -93,8 +93,10 @@
+ 
+     assert np.allclose(value, r_reference)
+ 
+-    assert pytest.approx(poly.alpha, {0: 0.5, 1: 0.5, 2: 0.5})
+-    assert pytest.approx(poly.norms2, {1: 0.09166666666666667, 2: 0.07283333333333333})
++    assert poly.alpha == pytest.approx({0: 0.5, 1: 0.5, 2: 0.5})
++    assert poly.norms2 == pytest.approx(
++        {0: 21.0, 1: 1.925, 2: 0.14020416666666669, 3: 0.009734175}
++    )
+ 
+     assert np.allclose(poly(data, degree=3), r_reference)
+ 

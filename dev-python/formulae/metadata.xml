@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>voitsik@gmail.com</email>
+		<name>Petr Voitsik</name>
+	</maintainer>
+	<stabilize-allarches/>
+	<upstream>
+		<remote-id type="pypi">formulae</remote-id>
+		<remote-id type="github">bambinos/formulae</remote-id>
+	</upstream>
+</pkgmetadata>
