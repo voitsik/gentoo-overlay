@@ -1,0 +1,24 @@
+diff -ur pyNFFT-1.3.2.orig/pynfft/nfft.pyx pyNFFT-1.3.2/pynfft/nfft.pyx
+--- pyNFFT-1.3.2.orig/pynfft/nfft.pyx	2014-07-30 17:48:52.000000000 +0400
++++ pyNFFT-1.3.2/pynfft/nfft.pyx	2024-01-08 04:08:11.487057959 +0300
+@@ -34,7 +34,7 @@
+ fftw_init_threads()
+ 
+ # register cleanup callbacks
+-cdef void _cleanup():
++cdef void _cleanup() noexcept:
+     fftw_cleanup()
+     fftw_cleanup_threads()
+ 
+diff -ur pyNFFT-1.3.2.orig/setup.py pyNFFT-1.3.2/setup.py
+--- pyNFFT-1.3.2.orig/setup.py	2014-07-30 18:24:45.000000000 +0400
++++ pyNFFT-1.3.2/setup.py	2024-01-08 04:02:42.516397788 +0300
+@@ -86,7 +86,7 @@
+             **common_extension_args
+             )
+         )
+-    return cythonize(ext_modules)
++    return cythonize(ext_modules, language_level=2)
+ 
+ 
+ # BEFORE importing distutils, remove MANIFEST. distutils doesn't properly
