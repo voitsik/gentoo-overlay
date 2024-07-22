@@ -1,9 +1,10 @@
-# Copyright 2019-2021 Gentoo Authors
+# Copyright 2019-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{7..9} )
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{10..12} )
 
 inherit distutils-r1
 
@@ -14,20 +15,18 @@ SRC_URI="https://github.com/casacore/python-casacore/archive/v${PV}.tar.gz -> ${
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 RDEPEND="
+	dev-python/numpy[${PYTHON_USEDEP}]
+	dev-python/six[${PYTHON_USEDEP}]
 	dev-libs/boost:0=[python,${PYTHON_USEDEP}]
 	>=sci-astronomy/casacore-3.2.0[python,${PYTHON_USEDEP}]
 "
-BDEPEND="${RDEPEND}
-	test? (
-		dev-python/future[${PYTHON_USEDEP}]
-	)
-"
+BDEPEND="${RDEPEND}"
 
-distutils_enable_tests nose
+distutils_enable_tests pytest
 
 python_test() {
-	nosetests --verbose tests || die "Tests fail with ${EPYTHON}"
+	rm -rf casacore || die
+	epytest
 }
