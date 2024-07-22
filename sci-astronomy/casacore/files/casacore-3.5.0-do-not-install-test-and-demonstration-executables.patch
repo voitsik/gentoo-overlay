@@ -7,9 +7,8 @@ measuresdata.csh and ms2uvfits should be included in casacore-doc as examples.
 change measuresdata.csh shebang to /usr/bin/tcsh as in Debian.
 ---
  measures/apps/CMakeLists.txt | 2 +-
- msfits/apps/CMakeLists.txt   | 5 -----
- 2 files changed, 1 insertion(+), 6 deletions(-)
- delete mode 100644 msfits/apps/CMakeLists.txt
+ msfits/apps/CMakeLists.txt   | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/measures/apps/CMakeLists.txt b/measures/apps/CMakeLists.txt
 index fcf2184..1bbf19f 100644
@@ -22,13 +21,12 @@ index fcf2184..1bbf19f 100644
 -install(PROGRAMS measuresdata/measuresdata-update DESTINATION bin)
 +install(PROGRAMS DESTINATION bin)
 diff --git a/msfits/apps/CMakeLists.txt b/msfits/apps/CMakeLists.txt
-deleted file mode 100644
-index d2775c8..0000000
+index d2775c8..ed448a3 100644
 --- a/msfits/apps/CMakeLists.txt
-+++ /dev/null
-@@ -1,5 +0,0 @@
--foreach(prog ms2uvfits)
--    add_executable (${prog}  ${prog}.cc)
--    target_link_libraries (${prog} casa_msfits ${CASACORE_ARCH_LIBS})
++++ b/msfits/apps/CMakeLists.txt
+@@ -1,5 +1,4 @@
+ foreach(prog ms2uvfits)
+     add_executable (${prog}  ${prog}.cc)
+     target_link_libraries (${prog} casa_msfits ${CASACORE_ARCH_LIBS})
 -    install(TARGETS ${prog} DESTINATION bin)
--endforeach(prog ms2uvfits)
+ endforeach(prog ms2uvfits)

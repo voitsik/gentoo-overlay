@@ -10,10 +10,10 @@ lack certain features.
  1 file changed, 14 insertions(+), 5 deletions(-)
 
 diff --git a/casa/OS/Directory.cc b/casa/OS/Directory.cc
-index 03b67ce..b79ce0f 100644
+index 3bb4f4a..ab1b98a 100644
 --- a/casa/OS/Directory.cc
 +++ b/casa/OS/Directory.cc
-@@ -488,29 +488,38 @@ Vector<String> Directory::shellExpand (const Vector<String>& files, Bool stripPa
+@@ -496,29 +496,38 @@ Vector<String> Directory::shellExpand (const Vector<String>& files, Bool stripPa
     return expInNames;
  }
  

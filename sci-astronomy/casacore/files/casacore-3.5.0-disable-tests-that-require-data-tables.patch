@@ -7,13 +7,12 @@ The data tables are not available during the build of casacore (yet).
  coordinates/Coordinates/test/CMakeLists.txt | 12 ++++-----
  images/Images/test/CMakeLists.txt           | 40 ++++++++++++++---------------
  images/Regions/test/CMakeLists.txt          |  8 +++---
- lattices/LatticeMath/test/CMakeLists.txt    |  2 +-
  meas/MeasUDF/test/CMakeLists.txt            | 14 +++++-----
  measures/Measures/test/CMakeLists.txt       | 37 ++++++++++++--------------
  measures/TableMeasures/test/CMakeLists.txt  |  2 +-
  ms/MSOper/test/CMakeLists.txt               |  8 +++---
  ms/MeasurementSets/test/CMakeLists.txt      |  2 +-
- 9 files changed, 60 insertions(+), 65 deletions(-)
+ 8 files changed, 59 insertions(+), 64 deletions(-)
 
 diff --git a/coordinates/Coordinates/test/CMakeLists.txt b/coordinates/Coordinates/test/CMakeLists.txt
 index bd1c996..248b395 100644
@@ -129,19 +128,6 @@ index b94c391..1201346 100644
  tWCUnion
  )
  
-diff --git a/lattices/LatticeMath/test/CMakeLists.txt b/lattices/LatticeMath/test/CMakeLists.txt
-index 0d869d5..47e5c76 100644
---- a/lattices/LatticeMath/test/CMakeLists.txt
-+++ b/lattices/LatticeMath/test/CMakeLists.txt
-@@ -13,7 +13,7 @@ tLatticeSlice1D
- tLatticeStatistics
- tLatticeStatsDataProvider
- tLatticeTwoPtCorr
--tLattStatsSpecialize
-+# tLattStatsSpecialize
- )
- 
- foreach (test ${tests})
 diff --git a/meas/MeasUDF/test/CMakeLists.txt b/meas/MeasUDF/test/CMakeLists.txt
 index e4e8ff4..5784f91 100644
 --- a/meas/MeasUDF/test/CMakeLists.txt

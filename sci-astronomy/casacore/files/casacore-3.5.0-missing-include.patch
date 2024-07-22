@@ -1,0 +1,20 @@
+commit eff9c5e4683d061743cfd5d037d69f218e0bedb6
+Author: Tammo Jan Dijkema <dijkema@astron.nl>
+Date:   Thu May 16 14:59:40 2024 +0200
+
+    Add missing include in test (#1350)
+    
+    Fixes #1348
+
+diff --git a/tables/Dysco/tests/testdyscostman.cc b/tables/Dysco/tests/testdyscostman.cc
+index 69da97cf0..ae52c0364 100644
+--- a/tables/Dysco/tests/testdyscostman.cc
++++ b/tables/Dysco/tests/testdyscostman.cc
+@@ -1,5 +1,6 @@
+ #include <boost/test/unit_test.hpp>
+ #include <boost/filesystem/operations.hpp>
++#include <boost/filesystem/directory.hpp>
+ 
+ #include <casacore/tables/Tables/ArrayColumn.h>
+ #include <casacore/tables/Tables/Table.h>
+

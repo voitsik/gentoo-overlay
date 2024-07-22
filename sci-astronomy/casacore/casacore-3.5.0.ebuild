@@ -1,24 +1,26 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 # ninja does not work due to fortran
 CMAKE_MAKEFILE_GENERATOR=emake
 
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_{10..12} )
 
-inherit cmake eutils toolchain-funcs fortran-2 python-r1
+inherit cmake toolchain-funcs fortran-2 python-r1
 
 DESCRIPTION="Core libraries for the Common Astronomy Software Applications"
 HOMEPAGE="https://github.com/casacore/casacore"
-SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/casacore/casacore/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
-KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 SLOT="0"
+KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 IUSE="+data doc hdf5 openmp python threads test"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
+
+RESTRICT="!test? ( test )"
 
 RDEPEND="
 	sci-astronomy/wcslib:0=
@@ -37,25 +39,22 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
-	doc? ( app-doc/doxygen )
+	doc? ( app-text/doxygen )
 	test? ( sci-astronomy/casa-data	)
 "
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-2.3.0-disable-class-and-collaboration-graph-generation.patch
-	"${FILESDIR}"/${PN}-3.0.0-disable-tests-that-require-data-tables.patch
-	"${FILESDIR}"/${PN}-2.3.0-do-not-install-test-and-demonstration-executables.patch
-	"${FILESDIR}"/${PN}-3.0.0-make-the-check-for-NFS-a-bit-more-portable-BSD.patch
+	"${FILESDIR}"/${P}-do-not-install-test-and-demonstration-executables.patch
+	"${FILESDIR}"/${P}-disable-class-and-collaboration-graph-generation.patch
+	"${FILESDIR}"/${P}-disable-tests-that-require-data-tables.patch
+	"${FILESDIR}"/${P}-disable-known-test-failures.patch
+	"${FILESDIR}"/${P}-make-the-check-for-nfs-a-bit-more-portable-bsd.patch
+	"${FILESDIR}"/${P}-add-c-style-header-to-fix-gcc-13.1-compile-error-on-uint1.patch
+	"${FILESDIR}"/${P}-missing-include.patch
 )
 
 pkg_pretend() {
 	use openmp && tc-check-openmp
-}
-
-src_prepare() {
-	cmake_src_prepare
-	sed -e '/python-py/s/^.*$/find_package(Boost REQUIRED COMPONENTS python)/' \
-		-i python3/CMakeLists.txt || die
 }
 
 src_configure() {
@@ -85,8 +84,6 @@ src_compile() {
 src_install(){
 	cmake_src_install
 	if use doc; then
-		insinto /usr/share/doc/${PF}
-		doins -r doc/html
-		docompress -x /usr/share/doc/${PF}/html
+		dodoc -r doc/html
 	fi
 }
