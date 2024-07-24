@@ -1,16 +1,20 @@
-# Copyright 2019-2020 Gentoo Authors
+# Copyright 2019-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{6..8} )
+DISTUTILS_EXT=1
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{10..12} )
 
-inherit distutils-r1 git-r3
+inherit distutils-r1
 
 DESCRIPTION="The Pythonic interface to PGPLOT"
 HOMEPAGE="https://github.com/haavee/ppgplot"
 
-EGIT_REPO_URI="https://github.com/haavee/ppgplot"
+GIT_REV="0f45866cf14fa86f239b866c984c0fa188c2c952"
+SRC_URI="https://github.com/haavee/ppgplot/archive/${GIT_REV}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}/${PN}-${GIT_REV}"
 
 LICENSE="LGPL-2"
 SLOT="0"
@@ -18,15 +22,15 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc examples"
 
 RDEPEND="
-	sci-libs/pgplot
 	dev-python/numpy[${PYTHON_USEDEP}]
+	sci-libs/pgplot
 "
-DEPEND="${DEPEND}"
+BDEPEND="${DEPEND}"
 
-python_compile() {
-	export PGPLOT_DIR="${EPREFIX}/usr/$(get_libdir)"
+python_prepare_all() {
+	cp "${FILESDIR}"/setup.py "${S}"/ || die
 
-	distutils-r1_python_compile
+	distutils-r1_python_prepare_all
 }
 
 python_install_all() {
