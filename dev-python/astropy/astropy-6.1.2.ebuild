@@ -31,6 +31,7 @@ RDEPEND="${DEPEND}
 	>=dev-python/pyerfa-2.0.1.1[${PYTHON_USEDEP}]
 	dev-python/packaging[${PYTHON_USEDEP}]
 	dev-python/scipy[${PYTHON_USEDEP}]
+	dev-python/pyyaml[${PYTHON_USEDEP}]
 "
 BDEPEND="
 	dev-python/extension-helpers[${PYTHON_USEDEP}]
@@ -41,7 +42,6 @@ BDEPEND="
 		media-gfx/graphviz
 		dev-python/jinja[${PYTHON_USEDEP}]
 		dev-python/pillow[${PYTHON_USEDEP},jpeg(+)]
-		dev-python/pyyaml[${PYTHON_USEDEP}]
 		dev-python/sphinx[${PYTHON_USEDEP}]
 		dev-python/sphinx-gallery[${PYTHON_USEDEP}]
 	)
@@ -55,7 +55,6 @@ BDEPEND="
 		dev-python/matplotlib[${PYTHON_USEDEP}]
 		dev-python/pandas[${PYTHON_USEDEP}]
 		dev-python/pillow[${PYTHON_USEDEP},jpeg(+)]
-		dev-python/pyyaml[${PYTHON_USEDEP}]
 		>=dev-python/pytest-astropy-header-0.2.1[${PYTHON_USEDEP}]
 		>=dev-python/pytest-doctestplus-0.12[${PYTHON_USEDEP}]
 		dev-python/pytest-mpl[${PYTHON_USEDEP}]
@@ -87,13 +86,14 @@ python_test() {
 }
 
 pkg_postinst() {
-	optfeature "reading Table objects from HTML files" dev-python/beautifulsoup
+	optfeature "reading Table objects from HTML files" dev-python/beautifulsoup4
 	optfeature "sanitizing text when disabling HTML escaping in the Table HTML writer" dev-python/bleach
-	optfeature "read/write Table objects from/to the Enhanced CSV ASCII table format" dev-python/pyyaml
 	optfeature "read/write Table objects from/to pandas DataFrame objects" dev-python/pandas
 	optfeature "specifying and converting between time zones" dev-python/pytz
 	optfeature "retrieve JPL ephemeris of Solar System objects" dev-python/jplephem
 	optfeature "plotting functionality that astropy.visualization enhances" dev-python/matplotlib
 	optfeature "the kraft-burrows-nousek interval in poisson_conf_interval" dev-python/mpmath
 	optfeature "read/write Table objects from/to HDF5 files" dev-python/h5py
+	optfeature "access to subsets of remote FITS files without having to download the entire file" dev-python/fsspec
+	optfeature "read/write Table objects from/to Parquet files" dev-python/pyarrow
 }
