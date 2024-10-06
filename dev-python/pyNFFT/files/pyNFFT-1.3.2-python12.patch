@@ -1,0 +1,24 @@
+diff '--color=auto' -ur pyNFFT-1.3.2.orig/setup.py pyNFFT-1.3.2/setup.py
+--- pyNFFT-1.3.2.orig/setup.py	2024-10-06 22:35:44.858413887 +0300
++++ pyNFFT-1.3.2/setup.py	2024-10-06 22:58:20.636876698 +0300
+@@ -216,9 +216,9 @@
+     elif os.path.exists('pynfft/version.py'):
+         # must be a source distribution, use existing version file
+         # load it as a separate module in order not to load __init__.py
+-        import imp
+-        version = imp.load_source('pynfft.version', 'pynfft/version.py')
+-        GIT_REVISION = version.git_revision
++        import runpy
++        version = runpy.run_path('pynfft/version.py')
++        GIT_REVISION = version['git_revision']
+     else:
+         GIT_REVISION = "Unknown"
+ 
+@@ -284,7 +284,6 @@
+         cmdclass = cmdclass,
+         classifiers = CLASSIFIERS,
+         platforms=['Linux', 'Unix'],
+-        test_suite='nose.collector',
+         setup_requires = build_requires,
+         install_requires = build_requires,
+         )
