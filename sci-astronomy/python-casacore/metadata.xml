@@ -10,6 +10,7 @@
   library used in radio astronomy. Python-casacore replaces the old pyrap.
   </longdescription>
   <upstream>
+    <remote-id type="pypi">python-casacore</remote-id>
     <remote-id type="github">casacore/python-casacore</remote-id>
   </upstream>
 </pkgmetadata>
