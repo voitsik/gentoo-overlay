@@ -1,0 +1,28 @@
+diff '--color=auto' -ur licplot-1.0.5.orig/setup.py licplot-1.0.5/setup.py
+--- licplot-1.0.5.orig/setup.py	2020-12-29 17:08:47.000000000 +0300
++++ licplot-1.0.5/setup.py	2024-10-08 20:06:00.153981825 +0300
+@@ -1,7 +1,4 @@
+ #!/usr/bin/env python
+-import os
+-import sys
+-
+ import setuptools
+ 
+ descr = """Line Integral Convolution Algorithms to plot 2D vector fields."""
+@@ -21,13 +18,11 @@
+ PACKAGE_NAME = "licplot"
+ 
+ 
+-class get_numpy_include(object):
++def get_numpy_include():
+     """Defer numpy.get_include() until after numpy is installed."""
++    import numpy
+ 
+-    def __str__(self):
+-        import numpy
+-
+-        return numpy.get_include()
++    return numpy.get_include()
+ 
+ 
+ # Call the setup function
