@@ -10,7 +10,7 @@ inherit distutils-r1
 
 DESCRIPTION="Python-casacore is a set of Python bindings for casacore"
 HOMEPAGE="https://casacore.github.io/python-casacore/"
-SRC_URI="https://github.com/casacore/python-casacore/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/casacore/python-casacore/archive/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
