@@ -1,0 +1,32 @@
+diff '--color=auto' -ur pandas_appender-0.9.8.4.orig/pandas_appender/appender.py pandas_appender-0.9.8.4/pandas_appender/appender.py
+--- pandas_appender-0.9.8.4.orig/pandas_appender/appender.py	2022-12-11 08:56:15.000000000 +0300
++++ pandas_appender-0.9.8.4/pandas_appender/appender.py	2024-10-17 19:47:32.296587799 +0300
+@@ -119,7 +119,7 @@
+         with warnings.catch_warnings():
+             warnings.simplefilter(action='ignore', category=FutureWarning)
+ 
+-            df = df.append(self._small, **self._append_kwargs)
++            df = df._append(self._small, **self._append_kwargs)
+ 
+         if self._infer_categories:
+             self._infer_and_merge(df)
+diff '--color=auto' -ur pandas_appender-0.9.8.4.orig/test/test_hints.py pandas_appender-0.9.8.4/test/test_hints.py
+--- pandas_appender-0.9.8.4.orig/test/test_hints.py	2022-12-11 10:00:38.000000000 +0300
++++ pandas_appender-0.9.8.4/test/test_hints.py	2024-10-17 20:13:37.469572903 +0300
+@@ -10,7 +10,7 @@
+ 
+     df = pd.DataFrame()
+     for aa in range(100):
+-        df = df.append({'a': 0, 'b': aa}, ignore_index=True)
++        df = df._append({'a': 0, 'b': aa}, ignore_index=True)
+     orig_dtypes = df.dtypes
+     inferred = pandas_appender.hints.infer_categories(df)
+     assert inferred.equals(pd.Series({'a': 'category'}))
+@@ -29,6 +29,6 @@
+ 
+     df = pd.DataFrame()
+     for aa in range(100):
+-        df = df.append({'a': 0, 'b': [aa]}, ignore_index=True)
++        df = df._append({'a': 0, 'b': [aa]}, ignore_index=True)
+     inferred = pandas_appender.hints.infer_categories(df)
+     assert inferred.equals(pd.Series({'a': 'category'}))
