@@ -18,22 +18,37 @@ HOMEPAGE="
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-RESTRICT="test"
 
-BDEPEND=""
 RDEPEND="
 	dev-python/astropy[${PYTHON_USEDEP}]
 	dev-python/h5py[${PYTHON_USEDEP}]
 	dev-python/matplotlib[${PYTHON_USEDEP}]
+	dev-python/networkx[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
 	dev-python/pandas[${PYTHON_USEDEP}]
+	dev-python/paramsurvey[${PYTHON_USEDEP}]
 	dev-python/pyNFFT[${PYTHON_USEDEP}]
+	dev-python/scikit-image[${PYTHON_USEDEP}]
 	dev-python/scipy[${PYTHON_USEDEP}]
 "
+BDEPEND="
+	test? (
+		${RDEPEND}
+	)
+
+"
+
+PATCHES=( "${FILESDIR}/${P}-numpy.patch" )
+
+distutils_enable_tests pytest
+
+python_test() {
+	cd 'ehtim/tests' || die
+
+	epytest || die "Tests failed with ${EPYTHON}"
+}
 
 pkg_postinst() {
 	optfeature "for space VLBI simulations" dev-python/skyfield
-	optfeature "using image_agreements()" dev-python/networkx
 	optfeature "using dynamical imaging" dev-python/requests
-	optfeature "hough transforms" dev-python/scikit-image
 }

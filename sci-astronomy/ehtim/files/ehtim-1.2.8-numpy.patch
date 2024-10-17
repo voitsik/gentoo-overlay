@@ -1,0 +1,13 @@
+diff '--color=auto' -ur ehtim-1.2.8.orig/ehtim/survey.py ehtim-1.2.8/ehtim/survey.py
+--- ehtim-1.2.8.orig/ehtim/survey.py	2023-09-08 04:00:46.000000000 +0300
++++ ehtim-1.2.8/ehtim/survey.py	2024-10-18 00:48:03.106227299 +0300
+@@ -25,9 +25,6 @@
+ import paramsurvey
+ import paramsurvey.params
+ 
+-import warnings
+-warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
+-
+ 
+ ##################################################################################################
+ # ParameterSet object
