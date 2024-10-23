@@ -21,7 +21,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	dev-cpp/abseil-cpp
+	dev-cpp/abseil-cpp:=
 "
 BDEPEND="
 	${RDEPEND}
