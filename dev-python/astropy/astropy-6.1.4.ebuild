@@ -40,7 +40,7 @@ BDEPEND="
 	doc? (
 		${RDEPEND}
 		media-gfx/graphviz
-		dev-python/jinja[${PYTHON_USEDEP}]
+		dev-python/jinja2[${PYTHON_USEDEP}]
 		dev-python/pillow[${PYTHON_USEDEP},jpeg(+)]
 		dev-python/sphinx[${PYTHON_USEDEP}]
 		dev-python/sphinx-gallery[${PYTHON_USEDEP}]

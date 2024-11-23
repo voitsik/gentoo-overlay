@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{10..12} )
+PYTHON_COMPAT=( python3_{10..13} )
 
 inherit distutils-r1 optfeature pypi
 
@@ -26,7 +26,7 @@ DEPEND="
 	>=sci-astronomy/wcslib-8.0:0=
 "
 RDEPEND="${DEPEND}
-	>=dev-python/astropy-iers-data-0.2024.7.1.0.34.3[${PYTHON_USEDEP}]
+	>=dev-python/astropy-iers-data-0.2024.10.28.0.34.7[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
 	>=dev-python/pyerfa-2.0.1.1[${PYTHON_USEDEP}]
 	dev-python/packaging[${PYTHON_USEDEP}]
@@ -57,10 +57,10 @@ BDEPEND="
 		dev-python/pillow[${PYTHON_USEDEP},jpeg(+)]
 		>=dev-python/pytest-astropy-header-0.2.1[${PYTHON_USEDEP}]
 		>=dev-python/pytest-doctestplus-0.12[${PYTHON_USEDEP}]
-		dev-python/pytest-mpl[${PYTHON_USEDEP}]
 		dev-python/pytest-remotedata[${PYTHON_USEDEP}]
 	)
 "
+# dev-python/pytest-mpl[${PYTHON_USEDEP}]
 
 distutils_enable_tests pytest
 
