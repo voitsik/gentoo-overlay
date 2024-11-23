@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
 PYPI_NO_NORMALIZE=1
-PYTHON_COMPAT=( python3_{10..12} )
+PYTHON_COMPAT=( python3_{10..13} )
 
 inherit distutils-r1 pypi
 
@@ -28,12 +28,13 @@ BDEPEND="
 	test? (
 		${RDEPEND}
 		dev-python/packaging[${PYTHON_USEDEP}]
-		dev-python/pip[${PYTHON_USEDEP}]
 		dev-python/pytest-remotedata[${PYTHON_USEDEP}]
 	)
 "
 
 distutils_enable_tests pytest
+
+PATCHES=( "${FILESDIR}/${P}-fix-python-3.13-compatibility.patch" )
 
 EPYTEST_DESELECT=(
 	# Needs network access
