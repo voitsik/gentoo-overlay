@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -6,9 +6,9 @@ EAPI=8
 # ninja does not work due to fortran
 CMAKE_MAKEFILE_GENERATOR=emake
 
-PYTHON_COMPAT=( python3_{10..12} )
+PYTHON_COMPAT=( python3_{10..13} )
 
-inherit cmake toolchain-funcs fortran-2 python-r1
+inherit cmake toolchain-funcs fortran-2 python-single-r1
 
 DESCRIPTION="Core libraries for the Common Astronomy Software Applications"
 HOMEPAGE="https://github.com/casacore/casacore"
@@ -26,7 +26,7 @@ RDEPEND="
 	sci-astronomy/wcslib:0=
 	sci-libs/gsl:0=
 	sci-libs/cfitsio:0=
-	sci-libs/fftw:3.0=
+	sci-libs/fftw:3.0=[threads]
 	sys-libs/readline:0=
 	virtual/blas:=
 	virtual/lapack:=
@@ -34,8 +34,10 @@ RDEPEND="
 	hdf5? ( sci-libs/hdf5:0= )
 	python? (
 		${PYTHON_DEPS}
-		dev-libs/boost:0=[python,${PYTHON_USEDEP}]
-		dev-python/numpy[${PYTHON_USEDEP}]
+		$(python_gen_cond_dep '
+			dev-libs/boost:0=[python,${PYTHON_USEDEP}]
+			dev-python/numpy[${PYTHON_USEDEP}]
+		')
 	)
 "
 BDEPEND="${RDEPEND}
@@ -59,7 +61,6 @@ pkg_pretend() {
 }
 
 src_configure() {
-	has_version sci-libs/hdf5[mpi] && export CXX=mpicxx
 	local mycmakeargs=(
 		-DENABLE_SHARED=ON
 		-DBUILD_PYTHON=OFF
@@ -69,9 +70,8 @@ src_configure() {
 		-DUSE_OPENMP="$(usex openmp)"
 		-DUSE_THREADS="$(usex threads)"
 		-DPYTHON3_EXECUTABLE="${PYTHON}"
-		-DBUILD_PYTHON3=ON
+		-DBUILD_PYTHON3="$(usex python)"
 	)
-	use python && python_foreach_impl python_set_options
 	cmake_src_configure
 }
 
