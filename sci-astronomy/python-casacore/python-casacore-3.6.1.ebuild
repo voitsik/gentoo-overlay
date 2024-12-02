@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=scikit-build-core
 DISTUTILS_EXT=1
-PYTHON_COMPAT=( python3_{10..12} )
+PYTHON_COMPAT=( python3_{10..13} )
 
 inherit distutils-r1 pypi
 
@@ -17,11 +17,13 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 RDEPEND="
-	dev-python/numpy[${PYTHON_USEDEP}]
+	>=sci-astronomy/casacore-3.6.0[python]
 	dev-libs/boost:0=[python,${PYTHON_USEDEP}]
-	>=sci-astronomy/casacore-3.6.0[python,${PYTHON_USEDEP}]
+	dev-python/numpy[${PYTHON_USEDEP}]
 "
 BDEPEND="${RDEPEND}"
+
+PATCHES=( "${FILESDIR}/${P}-no-six.patch" )
 
 distutils_enable_tests pytest
 
