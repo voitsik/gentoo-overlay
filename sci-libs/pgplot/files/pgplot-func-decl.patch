@@ -1,0 +1,772 @@
+diff '--color=auto' -urN pgplot.orig/pgdispd/cleanup.c pgplot/pgdispd/cleanup.c
+--- pgplot.orig/pgdispd/cleanup.c	1993-05-10 04:42:41.000000000 +0400
++++ pgplot/pgdispd/cleanup.c	2024-12-07 02:46:19.700956880 +0300
+@@ -15,6 +15,7 @@
+ /* The program include files */
+ #include "figdisp.h"
+ #include "globals.h"
++#include "functions.h"
+ 
+ void cleanup()
+ {
+diff '--color=auto' -urN pgplot.orig/pgdispd/exposelgwin.c pgplot/pgdispd/exposelgwin.c
+--- pgplot.orig/pgdispd/exposelgwin.c	1993-05-10 04:42:43.000000000 +0400
++++ pgplot/pgdispd/exposelgwin.c	2024-12-07 01:37:23.373267638 +0300
+@@ -17,9 +17,9 @@
+ /* The program include files */
+ #include "figdisp.h"
+ #include "globals.h"
++#include "functions.h"
+ 
+-void exposelgwin(event)
+-XExposeEvent event;
++void exposelgwin(XExposeEvent event)
+ {
+ 	/* pretty simple */
+ 	XCopyArea(display, lg.pixmap, lg.win, linegc, event.x-lg.winxoff,
+diff '--color=auto' -urN pgplot.orig/pgdispd/figcurs.c pgplot/pgdispd/figcurs.c
+--- pgplot.orig/pgdispd/figcurs.c	2024-12-07 00:40:50.551377863 +0300
++++ pgplot/pgdispd/figcurs.c	2024-12-07 02:01:11.824609412 +0300
+@@ -31,6 +31,7 @@
+ /* The program include files */
+ #include "figdisp.h"
+ #include "globals.h"
++#include "functions.h"
+ 
+ struct curpos {
+ 	short x;	/* x position */
+@@ -49,26 +50,24 @@
+ static int bmx,bmy;			/* bitmap graphics cursor location */
+ #endif
+ 
++static int getcurs(short *buf, struct curpos **curlist, struct curpos **listend);
++static void getbuttonval(unsigned int button, short *val);
++static int getkeyval(XEvent event, short *val);
++
+ /* The pggcurs and bmcurs routines get the first cursor event in the line */
+ /* graphics or bitmap graphics list and returns it in the buffer buf, which */
+ /* has the format for the BM_GET_CURS and LG_CURS commands. */
+ /* Return Values: */
+ /* Whatever getcurs returns */
+ 
+-int pggcurs(buf)
+-short *buf;
++int pggcurs(short *buf)
+ {
+-	int getcurs ();
+-
+ 	return(getcurs(buf,&lgcurses,&lastlg));
+ }
+ 
+ #ifndef PGDISP
+-int bmgcurs(buf)
+-short *buf;
++int bmgcurs(short *buf)
+ {
+-	int getcurs ();
+-
+ 	return(getcurs(buf,&bmcurses,&lastbm));
+ }
+ #endif
+@@ -79,10 +78,7 @@
+ /* 0	There are no cursor positions to return */
+ /* 1	The buffer was set properly */
+ 
+-int getcurs(buf,curlist,listend)
+-short *buf;
+-struct curpos **curlist;
+-struct curpos **listend;
++static int getcurs(short *buf, struct curpos **curlist, struct curpos **listend)
+ {
+ 	struct curpos *tmpptr;
+ 
+@@ -106,15 +102,10 @@
+ /* on the line graphics window. */
+ /* Return Value: 1 (no matter what) */
+ 
+-int pgcursor(event)
+-XEvent event;
++int pgcursor(XEvent event)
+ {
+ 	short val;	/* the "value" of the event" */
+ 
+-	void getbuttonval();
+-	int getkeyval();
+-
+-
+ 	if (event.type == ButtonPress) getbuttonval(event.xbutton.button, &val);
+ 	else if (!getkeyval(event, &val)) return(1);
+ 
+@@ -164,10 +155,6 @@
+ {
+ 	short val;	/* The value associated with the cursor event */
+ 
+-	void getbuttonval();
+-	int getkeyval();
+-
+-
+ 	if (event.type == ButtonPress) getbuttonval(event.xbutton.button, &val);
+ 	else if (!getkeyval(event, &val)) return(1);
+ 
+@@ -211,9 +198,7 @@
+ /* The getbuttonval routine updates val to correspond to the appropriate */
+ /* keypress. */
+ 
+-void getbuttonval(button,val)
+-unsigned int button;
+-short *val;
++static void getbuttonval(unsigned int button, short *val)
+ {
+ 	switch(button)
+ 	{
+@@ -244,9 +229,7 @@
+ /* 0	A modifier key was pressed */
+ /* 1	A regular key was pressed */
+ 
+-int getkeyval(event,val)
+-XEvent event;
+-short *val;
++static int getkeyval(XEvent event, short *val)
+ {
+ 	char tmpchr;
+ 	KeySym keysym;
+@@ -264,8 +247,7 @@
+ /* cursor events and does not do anything visible unless this position is */
+ /* different than the previousrecorded line graphics cursor location. */
+ 
+-void pgscurs(x,y)
+-int x,y;
++void pgscurs(int x, int y)
+ {
+ 	if (lgcurses != NULL) return;
+ 
+@@ -285,8 +267,7 @@
+ /* position is different than the previous recorded line graphics cursor */
+ /* location. */
+ 
+-void bmscurs(x,y)
+-int x,y;
++void bmscurs(int x, int y)
+ {
+ 	if (bmcurses != NULL) return;
+ 
+diff '--color=auto' -urN pgplot.orig/pgdispd/figdisp.h pgplot/pgdispd/figdisp.h
+--- pgplot.orig/pgdispd/figdisp.h	1993-05-10 04:42:44.000000000 +0400
++++ pgplot/pgdispd/figdisp.h	2024-12-07 01:14:57.928526369 +0300
+@@ -8,13 +8,13 @@
+ /*			and INCCOM */
+ /* 16-Nov-1990	SNS/CIT	Added LG_MAX_HEIGHT and LG_MAX_WIDTH. */
+ /* 10-Dec-1990	SNS/CIT	wininfo struct added.  VMS changes merged in. */
+-/*			LG_DEPTH changed to LG_MIN_DEPTH.  BM_MIN_DEPTH
++/*			LG_DEPTH changed to LG_MIN_DEPTH.  BM_MIN_DEPTH */
+ /*			added. */
+ /* 11-Dec-1990	SNS/CIT	winname and iconname added to wininfo structure. */
+ /*			BM_MIN_WIDTH, BM_MIN_HEIGHT, BM_WIDTH, BM_HEIGHT, */
+ /*			BM_MAX_WIDTH, BM_MAX_HEIGHT, and BM_COLORS added. */
+ /*			pix member of wininfo structure now a pointer. */
+-/* 12-Dec-1990	SNS/CIT	LG_BDWIDTH changed to BORDER_WIDTH.  BLANK_WIDTH
++/* 12-Dec-1990	SNS/CIT	LG_BDWIDTH changed to BORDER_WIDTH.  BLANK_WIDTH */
+ /*			added.  Image, line, maxh, minh, maxw, and minw */
+ /*			members added to wininfo structure. */
+ /* 17-Dec-1990	SNS/CIT	colors member added to wininfo structure. */
+@@ -47,7 +47,7 @@
+ /*			printer, the number of microseconds to sleep between */
+ /*			client existance checks, whether or not we should */
+ /*			force the location window pixels to be square, and */
+-/*			the number of color cells to copy from the default
++/*			the number of color cells to copy from the default */
+ /*			color map to any private color map. */
+ /* 25-Nov-1991	SNS/CIT	Now has separate zoom factors for X & Y and allows */
+ /*			user specification of the behaviour of line plots. */
+diff '--color=auto' -urN pgplot.orig/pgdispd/functions.h pgplot/pgdispd/functions.h
+--- pgplot.orig/pgdispd/functions.h	1970-01-01 03:00:00.000000000 +0300
++++ pgplot/pgdispd/functions.h	2024-12-07 02:32:25.815422645 +0300
+@@ -0,0 +1,52 @@
++#ifndef FUNCTIONS_H
++#define FUNCTIONS_H
++
++#include <X11/Xlib.h>
++
++#include "figdisp.h"
++
++/* Function prototypes */
++void cleanup();	/* clean up before exiting */
++void parsedisp(int *argc, char **argv);
++void mergeops();
++void extractops();
++int initlock();
++int getvisuals();
++int initlgwin();
++int mainloop();
++int getcolors(int vistype, Visual **visual,	Colormap *cmap, unsigned long *pix,	int maxcolors, int mincolors, int *depth, int maxdepth, int mindepth);
++int getdata(XSelectionEvent event, short *rbuf, int *rbuflen, Window srcwin, int *selset);
++void returnbuf(short *msg, int len, Window destwin);
++
++/* resizelgwin.c */
++void resizelgwin(XConfigureEvent event);
++
++/* exposelgwin.c */
++void exposelgwin(XExposeEvent event);
++
++/* updatelgtitle.c */
++void updatelgtitle(int x, int y);
++
++/* figcurs.c */
++int pgcursor(XEvent event);
++int pggcurs(short *buf);
++void pgscurs(int x, int y);
++void clearcurs();
++void bmscurs(int x, int y);
++
++/* proccom.c */
++int proccom(unsigned short *buf, int len, unsigned short *retbuf, int *retbuflen);
++
++/* initlgluts.c */
++void initlgluts();
++
++/* initwmattr.c */
++void initwmattr(struct wininfo wininf, char *wname, char *iname, struct geometry *geom);
++
++/* handlexevent.c */
++int handlexevent(XEvent event, int *go_on);
++
++/* waitevent.c */
++int waitevent();
++
++#endif /* FUNCTIONS_H */
+diff '--color=auto' -urN pgplot.orig/pgdispd/getcolors.c pgplot/pgdispd/getcolors.c
+--- pgplot.orig/pgdispd/getcolors.c	1993-05-10 04:42:45.000000000 +0400
++++ pgplot/pgdispd/getcolors.c	2024-12-07 00:45:19.944347057 +0300
+@@ -21,6 +21,7 @@
+ 
+ #include "figdisp.h"
+ #include "globals.h"
++#include "functions.h"
+ 
+ /* The visual classes to use for r/w color maps, in order of preference */
+ static int rwvis[]={DirectColor, PseudoColor, GrayScale};
+@@ -30,17 +31,17 @@
+ static int rovis[]={TrueColor, StaticColor, StaticGray};
+ static int nrovis=sizeof(rovis)/sizeof(rovis[0]);
+ 
+-int getcolors(vistype, visual, cmap, pix, maxcolors, mincolors, depth,
+-	maxdepth, mindepth)
+-int vistype;		/* The type of visual to use */
+-Visual **visual;	/* The visual actually used */
+-Colormap *cmap;		/* The color map actually used */
+-unsigned long *pix;	/* The pixels allocated */
+-int maxcolors;		/* The maximum number of colors to allocate */
+-int mincolors;		/* The minimum number of colors to allocate */
+-int *depth;		/* The depth of the visual actually used */
+-int maxdepth;		/* The maximum allowed visual depth */
+-int mindepth;		/* The minimum allowed visual depth */
++int getcolors(
++	int vistype,		/* The type of visual to use */
++	Visual **visual,	/* The visual actually used */
++	Colormap *cmap,		/* The color map actually used */
++	unsigned long *pix,	/* The pixels allocated */
++	int maxcolors,		/* The maximum number of colors to allocate */
++	int mincolors,		/* The minimum number of colors to allocate */
++	int *depth,			/* The depth of the visual actually used */
++	int maxdepth,		/* The maximum allowed visual depth */
++	int mindepth		/* The minimum allowed visual depth */
++)
+ {
+ 	XVisualInfo vinfo;	/* The template for our visual */
+ 	unsigned long pmtmp[1];	/* temporary for plane masks */
+diff '--color=auto' -urN pgplot.orig/pgdispd/getdata.c pgplot/pgdispd/getdata.c
+--- pgplot.orig/pgdispd/getdata.c	1994-03-31 23:59:39.000000000 +0400
++++ pgplot/pgdispd/getdata.c	2024-12-07 02:07:56.137396007 +0300
+@@ -2,7 +2,7 @@
+ /* It is called upon receipt of a SelectionNotify event. */
+ /* Return Value: */
+ /* 1	If everything went fine */
+-/* 0	If something happened and the program should terminate. *
++/* 0	If something happened and the program should terminate. */
+ 
+ /* Sam Southard, Jr. */
+ /* Created: 15-Dec-1990 from mainloop.c */
+@@ -34,15 +34,16 @@
+ #include "figdisp.h"
+ #include "globals.h"
+ #include "messages.h"
++#include "functions.h"
+ 
+-
+-int getdata(event,rbuf,rbuflen,srcwin,selset)
+-XSelectionEvent event;	/* the event we're handling */
+-short *rbuf;	/* a return buffer, if needed */
+-int *rbuflen;	/* the length of the return buffer.  If it's 0, no return */
+-		/* message should be sent. */
+-Window srcwin;	/* the source of our data */
+-int *selset;	/* whether or not the selection is owned by a user program */
++int getdata(
++	XSelectionEvent event,	/* the event we're handling */
++	short *rbuf,	/* a return buffer, if needed */
++	int *rbuflen,	/* the length of the return buffer.  If it's 0, no return */
++					/* message should be sent. */
++	Window srcwin,	/* the source of our data */
++	int *selset		/* whether or not the selection is owned by a user program */
++)
+ {
+ 	short *buffer;			/* buffer for the data received */
+ 	/* the max buffer length (in 16-bit words) */
+@@ -52,9 +53,8 @@
+ 	Atom acttype;			/* the actual data type */
+ 	int actform;			/* the actual data format */
+ 
+-	void returnbuf();		/* return data to the user process */
+-	void clearcurs();		/* clear the list of cursor presses */
+-	int proccom ();
++	// void clearcurs();		/* clear the list of cursor presses */
++	// int proccom ();
+ 
+ 	if (buflen == -1) buflen= (XMaxRequestSize(display)-10)<<1;
+ 	if (XGetWindowProperty(display, srcwin, event.property, 0L, buflen,
+diff '--color=auto' -urN pgplot.orig/pgdispd/getvisuals.c pgplot/pgdispd/getvisuals.c
+--- pgplot.orig/pgdispd/getvisuals.c	2024-12-07 00:40:50.551377863 +0300
++++ pgplot/pgdispd/getvisuals.c	2024-12-07 01:05:31.679331738 +0300
+@@ -25,12 +25,13 @@
+ /*  6-Mar-1992	SNS/CIT	getcolors now takes a min and max visual depth. */
+ /*  9-Mar-1992	SNS/CIT	Silly bug in two color mode fixed */
+ 
++#include <stdio.h>
++#include <stdlib.h>
++
+ #include "figdisp.h"
+ #include "globals.h"
+ #include "messages.h"
+-
+-#include <stdio.h>
+-#include <stdlib.h>
++#include "functions.h"
+ 
+ #define MAX_DEPTH	24	/* the maximum visual depth to use */
+ 
+@@ -277,10 +278,10 @@
+ 
+ 	if ((bm.colors=getcolors(UseDefaultCmap, &bitvisual, &bitcmap, bm.pix,
+ 		res.maxcolors+res.leavecolors, res.mincolors+res.leavecolors,
+-		&bitdepth))
++		&bitdepth, 8, 8))
+ 	    || (bm.colors=getcolors(UseRWVisual, &bitvisual, &bitcmap, bm.pix,
+ 		res.maxcolors+res.savecolors, res.mincolors+res.savecolors,
+-		&bitdepth)))
++		&bitdepth, 8, 8)))
+ 	{ /* success! */
+ 		if (bitcmap == DefaultColormap(display, screen))
+ 		{
+@@ -323,7 +324,7 @@
+ 	while (res.lgcolors > 2)
+ 	{
+ 		if (lg.colors=getcolors(UseROVisual, &linevisual, &linecmap,
+-			lg.pix, res.lgcolors, res.lgcolors, &linedepth)) break;
++			lg.pix, res.lgcolors, res.lgcolors, &linedepth, 8, 8)) break;
+ 
+ 		/* lower our standards */
+ 		if (res.lgcolors > 16) res.lgcolors=16;
+diff '--color=auto' -urN pgplot.orig/pgdispd/handlexevent.c pgplot/pgdispd/handlexevent.c
+--- pgplot.orig/pgdispd/handlexevent.c	1994-03-31 23:56:24.000000000 +0400
++++ pgplot/pgdispd/handlexevent.c	2024-12-07 01:42:12.189510035 +0300
+@@ -45,13 +45,15 @@
+ #include "figdisp.h"
+ #include "globals.h"
+ #include "messages.h"
++#include "functions.h"
+ 
+ int luttransoff=0;
+ int modluttransoff=0;
+ 
+-int handlexevent(event,go_on)
+-XEvent event;
+-int *go_on;	/* whether the calling routine shoudl exit successfully */
++int handlexevent(
++	XEvent event,
++	int *go_on	/* whether the calling routine shoudl exit successfully */
++)
+ {
+ #ifndef PGDISP
+ 	static int slitxs= -1,slitys;	/* the starting point for the slit */
+@@ -70,10 +72,10 @@
+ 	int dummy;
+ 	unsigned int keys;
+ 
+-	void returnbuf();	/* return data to user program */
+-	void resizelgwin();	/* resize line graphics window */
+-	void exposelgwin();	/* expose the line graphics window */
+-	void updatelgtitle();	/* update the line graphics cursor position */
++	// void returnbuf();	/* return data to user program */
++	// void resizelgwin();	/* resize line graphics window */
++	// void exposelgwin();	/* expose the line graphics window */
++	// void updatelgtitle();	/* update the line graphics cursor position */
+ #ifndef PGDISP
+ 	void updatetitle();
+ 	void exposesee();	/* expose the seeing window */
+diff '--color=auto' -urN pgplot.orig/pgdispd/initlgluts.c pgplot/pgdispd/initlgluts.c
+--- pgplot.orig/pgdispd/initlgluts.c	1993-05-10 04:42:48.000000000 +0400
++++ pgplot/pgdispd/initlgluts.c	2024-12-07 02:28:49.422378001 +0300
+@@ -13,6 +13,7 @@
+ /* The program include files */
+ #include "figdisp.h"
+ #include "globals.h"
++#include "functions.h"
+ 
+ static unsigned short pgcolors[LG_COLORS][3]= {
+ 	    0,	    0,	    0,
+diff '--color=auto' -urN pgplot.orig/pgdispd/initlgwin.c pgplot/pgdispd/initlgwin.c
+--- pgplot.orig/pgdispd/initlgwin.c	1995-02-24 21:13:24.000000000 +0300
++++ pgplot/pgdispd/initlgwin.c	2024-12-07 02:21:03.642999326 +0300
+@@ -43,6 +43,7 @@
+ #include "figdisp.h"
+ #include "globals.h"
+ #include "messages.h"
++#include "functions.h"
+ #include "figdisp.icon"
+ #include "nocursor.icon"
+ 
+@@ -65,11 +66,6 @@
+ 
+ 	Window foobar;
+ 
+-	Pixmap XCreatePixmap();
+-	void initlgluts();	/* initialize the LUTs */
+-	char *malloc();
+-	void initwmattr();
+-
+ 	/* Initialize the line graphics LUTs */
+ 	initlgluts();
+ 
+diff '--color=auto' -urN pgplot.orig/pgdispd/initwmattr.c pgplot/pgdispd/initwmattr.c
+--- pgplot.orig/pgdispd/initwmattr.c	1993-11-29 23:50:44.000000000 +0300
++++ pgplot/pgdispd/initwmattr.c	2024-12-07 02:19:50.043098051 +0300
+@@ -6,19 +6,21 @@
+ /* Modification History: */
+ /* 14-Apr-1992	SNS/CIT	Now compiles under VMS */
+ 
++/* The system include files */
++#include <stdio.h>
++
+ /* The program include files */
+ #include "commands.h"
+ #include "figdisp.h"
+ #include "globals.h"
++#include "functions.h"
+ 
+-/* The system include files */
+-#include <stdio.h>
+-
+-void initwmattr(wininf,wname,iname,geom)
+-struct wininfo wininf;	/* the information about this window */
+-char *wname;	/* The name for the window */
+-char *iname;	/* the name for the icon */
+-struct geometry *geom;	/* The windows geometry.  May be NULL */
++void initwmattr(
++	struct wininfo wininf,	/* The information about this window */
++	char *wname,			/* The name for the window */
++	char *iname,			/* The name for the icon */
++	struct geometry *geom	/* The windows geometry.  May be NULL */
++)
+ {
+ 	char winnamebuf[80];	/* a buffer for the window name */
+ 	char *strptr= &winnamebuf[0];	/* pointer to buffer */
+diff '--color=auto' -urN pgplot.orig/pgdispd/mainloop.c pgplot/pgdispd/mainloop.c
+--- pgplot.orig/pgdispd/mainloop.c	1993-05-10 04:42:51.000000000 +0400
++++ pgplot/pgdispd/mainloop.c	2024-12-07 00:59:00.759891685 +0300
+@@ -57,6 +57,7 @@
+ /* The program include files */
+ #include "figdisp.h"
+ #include "globals.h"
++#include "functions.h"
+ 
+ int mainloop()
+ {
+diff '--color=auto' -urN pgplot.orig/pgdispd/pgdisp.c pgplot/pgdispd/pgdisp.c
+--- pgplot.orig/pgdispd/pgdisp.c	1993-05-10 04:42:53.000000000 +0400
++++ pgplot/pgdispd/pgdisp.c	2024-12-07 00:43:45.101141833 +0300
+@@ -43,17 +43,11 @@
+ #undef DEFINE_GLOBALS
+ #undef INC_HEADER_RCS
+ 
+-int main(argc,argv)
+-int argc;
+-char **argv;
+-{
+-	Display *XOpenDisplay();
++#include "functions.h"
+ 
+-	void cleanup();	/* clean up before exiting */
+-	void parsedisp();
+-	void mergeops();
+-	void extractops();
+ 
++int main(int argc, char **argv)
++{
+ 	/* Initialize stuff for the resource manager */
+ 	XrmInitialize();
+ 
+diff '--color=auto' -urN pgplot.orig/pgdispd/proccom.c pgplot/pgdispd/proccom.c
+--- pgplot.orig/pgdispd/proccom.c	2024-12-07 00:40:50.551377863 +0300
++++ pgplot/pgdispd/proccom.c	2024-12-07 02:59:12.806553857 +0300
+@@ -113,15 +113,17 @@
+ #include "figdisp.h"
+ #include "globals.h"
+ #include "messages.h"
++#include "functions.h"
+ 
+ /* A trivial macro */
+ #define min(x,y) (((x) > (y)) ? (y) : (x))
+ 
+-int proccom(buf,len,retbuf,retbuflen)
+-unsigned short *buf;	/* the buffer of commands and arguments */
+-int len;	/* the length of the buffer */
+-unsigned short *retbuf;	/* a buffer for return values */
+-int *retbuflen;	/* the length of retbuf */
++int proccom(
++	unsigned short *buf,	/* the buffer of commands and arguments */
++	int len,				/* the length of the buffer */
++	unsigned short *retbuf,	/* a buffer for return values */
++	int *retbuflen			/* the length of retbuf */
++)
+ {
+ 	static short bufcont[7];	/* the buffer contents while we're */
+ 					/* working on things */
+@@ -156,16 +158,14 @@
+ 	/* note that this should be short even in FASTDISP */
+ 	short *tempim;		/* a pointer to  new image structure */
+ #endif
+-	void initlgluts();	/* initialize the LUTs */
+-	void pgscurs();		/* set the line graphics cursor position */
+-	void returnbuf();	/* return the answer to the client */
+-	void bmscurs();		/* set the bitmap graphics cursor position */
+-	void redrawim();	/* redraw the bitmap graphics window */
+-	void drawline();	/* draw a line in the bitmap window */
+-	Pixmap XCreatePixmap();
++	// void initlgluts();	/* initialize the LUTs */
++	// void pgscurs();		/* set the line graphics cursor position */
++	// void returnbuf();	/* return the answer to the client */
++	// void bmscurs();		/* set the bitmap graphics cursor position */
++	// void redrawim();	/* redraw the bitmap graphics window */
++	// void drawline();	/* draw a line in the bitmap window */
+ 
+-
+-	if (!len & savedshorts)
++	if (!len && savedshorts)
+ 	{ /* an incomplete command was sent! */
+ 		savedshorts=0;
+ 		free((char *)olddata);
+diff '--color=auto' -urN pgplot.orig/pgdispd/resdb.c pgplot/pgdispd/resdb.c
+--- pgplot.orig/pgdispd/resdb.c	2024-12-07 00:40:50.551377863 +0300
++++ pgplot/pgdispd/resdb.c	2024-12-07 00:56:22.800118013 +0300
+@@ -39,9 +39,6 @@
+ static char rcsid[]="@(#)$Id: resdb.c,v 1.13 1993/10/08 00:02:48 figaro Exp figaro $";
+ #endif
+ 
+-#include "figdisp.h"
+-#include "globals.h"
+-
+ #include <X11/Xresource.h>
+ #include <X11/keysym.h>
+ #include <stdio.h>
+@@ -49,6 +46,10 @@
+ #include <string.h>
+ #include <unistd.h>
+ 
++#include "figdisp.h"
++#include "globals.h"
++#include "functions.h"
++
+ #ifndef VMS
+ #include <pwd.h>
+ #endif
+@@ -253,13 +254,12 @@
+ /* The name of the program */
+ static char prog[80];
+ 
+-static char *GetHomeDir();
++static char *GetHomeDir(char *dest);
++static void Usage(const char *prog);
+ 
+ /* The parseops routine parses command line arguments */
+ 
+-void parsedisp(argc, argv)
+-int *argc;
+-char **argv;
++void parsedisp(int *argc, char **argv)
+ {
+ 	/* the name of the display */
+ 	char dispname[256];
+@@ -267,8 +267,6 @@
+ 	char *strtype[20];
+ 	char *progname;
+ 
+-	void Usage();
+-
+ 	dispname[0] = '\0';
+ 
+ 	if ((progname=strrchr(argv[0],'/')) == NULL) strcpy(prog,argv[0]);
+@@ -307,9 +305,9 @@
+ 	char filename[1024];
+ 	char *env;
+ #ifdef PGDISP
+-	char *classname = "Pgdisp";
++	const char *classname = "Pgdisp";
+ #else
+-	char *classname = "Figdisp";
++	const char *classname = "Figdisp";
+ #endif
+ 
+ 	/* get the application defaults */
+@@ -1023,8 +1021,7 @@
+ "\t[-increaseLUTWrap key] [-decreaseLUTWrap key] [-box key] [-mouseMode key]\n",
+ "",
+ };
+-void Usage(prog)
+-char *prog;
++static void Usage(const char *prog)
+ {
+ 	int i=0;
+ 
+@@ -1038,13 +1035,10 @@
+ #ifndef VMS
+ /* striaght from the X manual */
+ 
+-static char *GetHomeDir(dest)
+-char *dest;
++static char *GetHomeDir(char *dest)
+ {
+ 	int uid;
+ 
+-	extern char *getenv();
+-	extern struct passwd *getpwuid();
+ 	struct passwd *pw;
+ 	register char *ptr;
+ 
+diff '--color=auto' -urN pgplot.orig/pgdispd/resizelgwin.c pgplot/pgdispd/resizelgwin.c
+--- pgplot.orig/pgdispd/resizelgwin.c	1993-05-10 04:42:56.000000000 +0400
++++ pgplot/pgdispd/resizelgwin.c	2024-12-07 01:35:55.030064085 +0300
+@@ -17,16 +17,14 @@
+ /* The program include files */
+ #include "figdisp.h"
+ #include "globals.h"
++#include "functions.h"
+ 
+-void resizelgwin(event)
+-XConfigureEvent event;
++void resizelgwin(XConfigureEvent event)
+ {
+ 	int changed=0;	/* whether or not we need to resize the window again */
+ 	static int lastchanged=0;	/* if we changed last time through */
+ 	Pixmap temppixmap;	/* pixmap to hold old data */
+ 
+-	Pixmap XCreatePixmap();
+-
+ 	lg.width=lg.imwidth=event.width;
+ 	lg.height=lg.imheight=event.height;
+ 
+diff '--color=auto' -urN pgplot.orig/pgdispd/returnbuf.c pgplot/pgdispd/returnbuf.c
+--- pgplot.orig/pgdispd/returnbuf.c	1993-05-10 04:42:56.000000000 +0400
++++ pgplot/pgdispd/returnbuf.c	2024-12-07 01:29:49.730600755 +0300
+@@ -8,17 +8,19 @@
+ /* 15-Aug-1991	SNS/CIT	No longer includes hooks for Xvideo */
+ /*  8-Oct-1991	SNS/CIT	Globals now in globals.h */
+ 
+-#include "figdisp.h"
+-#include "globals.h"
+-
+ /* The X Window include files */
+ #include <X11/Xlib.h>
+ #include <X11/Xatom.h>
+ 
+-void returnbuf(msg,len,destwin)
+-short *msg;	/* the message to send to the client. */
+-int len;	/* The length of the message. */
+-Window destwin;	/* The window who's atom should be changed. */
++#include "figdisp.h"
++#include "globals.h"
++#include "functions.h"
++
++void returnbuf(
++	short *msg,		/* the message to send to the client. */
++	int len,		/* The length of the message. */
++	Window destwin	/* The window who's atom should be changed. */
++)
+ {
+ 	/* If the window is still around, then send the reply */
+ 	if (selset) XChangeProperty(display,destwin,selatom,XA_STRING,8,
+diff '--color=auto' -urN pgplot.orig/pgdispd/updatelgtitle.c pgplot/pgdispd/updatelgtitle.c
+--- pgplot.orig/pgdispd/updatelgtitle.c	1993-05-10 04:42:57.000000000 +0400
++++ pgplot/pgdispd/updatelgtitle.c	2024-12-07 01:41:53.156204661 +0300
+@@ -11,13 +11,17 @@
+ /* 10-Apr-1992	SNS/CIT	Can now deal with lg.winxoff and lg.winyoff */
+ /*  4-Oct-1992	SNS/CIT	No longer needs #ifdef KECK */
+ 
+-#include "figdisp.h"
+-#include "globals.h"
+ #include <X11/Xlib.h>
++#include <stdio.h>
+ #include <string.h>
+ 
+-void updatelgtitle(x,y)
+-int x,y;	/* cursor position */
++#include "figdisp.h"
++#include "globals.h"
++#include "functions.h"
++
++void updatelgtitle(
++	int x, int y	/* cursor position */
++)
+ {
+ 	char newtitle[80];
+ 	char tempstr[80];
+@@ -27,10 +31,6 @@
+ 	XImage *image;
+ 	int i;
+ 
+-#ifndef _AIX
+-	char *sprintf();
+-#endif
+-
+ 	/* make sure we don't confuse anything. */
+ 	if (x < lg.winxoff || x >= lg.imwidth+lg.winxoff || y < lg.winyoff ||
+ 	   y >= lg.imheight+lg.winyoff) return;
+@@ -67,6 +67,5 @@
+ 	if (XStringListToTextProperty(&strptr, 1, &lg.winname))
+ 		XSetWMName(display, lg.win, &lg.winname);
+ 
+-
+ 	return;
+ }
+diff '--color=auto' -urN pgplot.orig/pgdispd/waitevent.c pgplot/pgdispd/waitevent.c
+--- pgplot.orig/pgdispd/waitevent.c	1994-11-08 02:24:11.000000000 +0300
++++ pgplot/pgdispd/waitevent.c	2024-12-07 02:43:44.824502592 +0300
+@@ -46,17 +46,18 @@
+ #include "globals.h"
+ #include "messages.h"
+ #include "commands.h"
++#include "functions.h"
+ 
+ /* Choose one of the following to select either good response time or low */
+ /* system load, keeping in mind what your system provides.  If none of the */
+ /* following defines is chosen, BUSY is used. */
+-/* #define	BUSY	/* Busy loop while waiting for events.  This loads */
++/* #define	BUSY */	/* Busy loop while waiting for events.  This loads */
+ 			/* system but gives quickest response time and is */
+ 			/* ompletely portable (since it does nothing). */
+-/* #define	SLEEP	/* Use the sleep(3) call to wait between existance */
++/* #define	SLEEP */	/* Use the sleep(3) call to wait between existance */
+ 			/* checks.  This is much nicer on the system load but */
+ 			/* gives poor response time. */
+-/* #define	SELECT	/* Use this if possible. */
++/* #define	SELECT */	/* Use this if possible. */
+ #ifdef VMS
+ #define		WAIT	/* use the LIB$WAIT call */
+ #else
+@@ -93,7 +94,7 @@
+ 				return(-1);
+ 			}
+ 			XUngrabKeyboard(display,CurrentTime);
+-			(void)proccom((short *)NULL,0,(short *)NULL,(int *)0);
++			(void)proccom((unsigned short *)NULL,0,(unsigned short *)NULL,(int *)NULL);
+ 			return(0);	/* the selection owner was reset */
+ 		}
+ 		/* give the idle message if the user's asked for it */
