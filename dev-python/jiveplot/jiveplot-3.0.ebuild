@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{10..12} )
+PYTHON_COMPAT=( python3_{10..13} )
 
 inherit distutils-r1
 
@@ -27,3 +27,5 @@ RDEPEND="
 	dev-python/six[${PYTHON_USEDEP}]
 	sci-astronomy/python-casacore[${PYTHON_USEDEP}]
 "
+
+PATCHES=( "${FILESDIR}/${P}-imp.patch" )
