@@ -26,7 +26,7 @@ DOCS=( ChangeLog INSTALL README UPGRADE )
 # configurable from outside, e.g. /etc/portage/make.conf
 IP_NF_SET_MAX=${IP_NF_SET_MAX:-256}
 
-PATCHES=( "${FILESDIR}/${PN}-bash-completion.patch")
+PATCHES=( "${FILESDIR}/${P}-bash-completion.patch")
 
 src_prepare() {
 	default
