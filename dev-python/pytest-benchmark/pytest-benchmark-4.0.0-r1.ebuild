@@ -1,11 +1,11 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
 PYPI_NO_NORMALIZE=1
-PYTHON_COMPAT=( python3_{10..12} )
+PYTHON_COMPAT=( python3_{10..13} )
 
 inherit distutils-r1 pypi
 
@@ -25,7 +25,6 @@ RDEPEND="
 BDEPEND="
 	test? (
 		${RDEPEND}
-		dev-python/elasticsearch[${PYTHON_USEDEP}]
 		dev-python/freezegun[${PYTHON_USEDEP}]
 		dev-python/pytest-xdist[${PYTHON_USEDEP}]
 		dev-vcs/git
@@ -46,9 +45,16 @@ EPYTEST_DESELECT=(
 	'tests/test_with_weaver.py'
 )
 
+python_prepare_all() {
+	rm tests/test_elasticsearch_storage.py || die
+
+	distutils-r1_python_prepare_all
+}
+
 python_test() {
-	export COLUMNS=80
-	export PYTHONUNBUFFERED=yes
+	local -x COLUMNS=80
+	local -x PYTHONUNBUFFERED=yes
+	local -x LC_ALL=C.UTF-8
 
 	epytest tests
 }
