@@ -1,0 +1,15 @@
+diff '--color=auto' -ur pytensor-ecfd045443a65df6c00245187fe4c4140b28c2ca.orig/pyproject.toml pytensor-ecfd045443a65df6c00245187fe4c4140b28c2ca/pyproject.toml
+--- pytensor-ecfd045443a65df6c00245187fe4c4140b28c2ca.orig/pyproject.toml	2025-02-14 19:53:29.000000000 +0300
++++ pytensor-ecfd045443a65df6c00245187fe4c4140b28c2ca/pyproject.toml	2025-02-15 20:34:49.703115030 +0300
+@@ -129,11 +129,7 @@
+ docstring-code-format = true
+ 
+ [tool.ruff.lint]
+-<<<<<<< HEAD
+-select = ["B905", "C", "E", "F", "I", "UP", "W", "RUF", "PERF", "PTH", "ISC", "T20"]
+-=======
+ select = ["B905", "C", "E", "F", "I", "UP", "W", "RUF", "PERF", "PTH", "ISC", "NPY201"]
+->>>>>>> ca2dd3dce (Unpinned numpy)
+ ignore = ["C408", "C901", "E501", "E741", "RUF012", "PERF203", "ISC001"]
+ unfixable = [
+     # zip-strict: the auto-fix adds `strict=False` but we might want `strict=True` instead
