@@ -1,0 +1,30 @@
+diff '--color=auto' -ur numpyro-0.15.3.orig/test/test_pickle.py numpyro-0.15.3/test/test_pickle.py
+--- numpyro-0.15.3.orig/test/test_pickle.py	2024-09-18 02:22:17.000000000 +0300
++++ numpyro-0.15.3/test/test_pickle.py	2024-10-29 22:30:35.935706658 +0300
+@@ -12,7 +12,6 @@
+ import jax.numpy as jnp
+ 
+ import numpyro
+-from numpyro.contrib.funsor import config_kl
+ import numpyro.distributions as dist
+ from numpyro.distributions import constraints
+ from numpyro.distributions.constraints import (
+@@ -55,6 +54,10 @@
+ )
+ from numpyro.infer.autoguide import AutoDelta, AutoDiagonalNormal, AutoNormal
+ 
++try:
++    from numpyro.contrib.funsor import config_kl
++except ImportError:
++    config_kl = None
+ 
+ def normal_model():
+     numpyro.sample("x", dist.Normal(0, 1))
+@@ -226,6 +229,7 @@
+         numpyro.sample("obs", dist.Bernoulli(f), obs=data)
+ 
+ 
++@pytest.mark.skipif(config_kl is None, reason="require funsor installation")
+ def test_beta_bernoulli():
+     data = jnp.array([1.0] * 8 + [0.0] * 2)
+ 
