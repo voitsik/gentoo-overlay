@@ -47,6 +47,12 @@ src_unpack() {
 	mkdir -p "${S}/vendor" || die
 
 	go-module_src_unpack
+
+	if [ -d "Throne-${PV}" ]; then
+		cp -r -p "Throne-${PV}"/* "${S}/" || die
+		rm -r "Throne-${PV}" || die
+	fi
+
 }
 
 src_prepare() {
