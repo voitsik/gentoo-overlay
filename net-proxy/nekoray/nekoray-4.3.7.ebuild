@@ -39,6 +39,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-4.3.7-Use-system-fkYAML.patch"
 	"${FILESDIR}/${PN}-4.3.7-Use-system-QHotkey.patch"
 	"${FILESDIR}/${PN}-4.3.7-Use-system-quirc.patch"
+	"${FILESDIR}/${PN}-4.3.7-fix-save-default-outbound.patch"
 )
 
 src_unpack() {
