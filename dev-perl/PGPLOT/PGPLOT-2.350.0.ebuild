@@ -1,10 +1,10 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 DIST_AUTHOR=ETJ
-DIST_VERSION=2.32
+DIST_VERSION=2.35
 inherit perl-module
 
 DESCRIPTION="Allow subroutines in the PGPLOT graphics library to be called from Perl"
