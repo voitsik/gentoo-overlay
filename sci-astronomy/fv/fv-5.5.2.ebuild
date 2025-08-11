@@ -1,13 +1,14 @@
 # Copyright 1999-2020 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 MY_P=${P/-/}
 
 DESCRIPTION="The Interactive FITS File Editor"
 HOMEPAGE="https://heasarc.gsfc.nasa.gov/ftools/fv/"
-SRC_URI="http://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/${PN}/${MY_P}_Linux.tar.gz"
+SRC_URI="https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/${PN}/${MY_P}_Linux.tar.gz"
+S="${WORKDIR}/${MY_P}"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -19,10 +20,8 @@ RDEPEND="
 	x11-libs/libXft
 	x11-libs/libXScrnSaver
 	x11-libs/xpa
-	~dev-tcltk/tix-8.4.3"
-DEPEND=""
-
-S="${WORKDIR}/${MY_P}"
+	~dev-tcltk/tix-8.4.3
+"
 
 QA_PRESTRIPPED="opt/${PN}/fv"
 
