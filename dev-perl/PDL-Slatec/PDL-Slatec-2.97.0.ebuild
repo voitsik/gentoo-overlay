@@ -19,4 +19,7 @@ RDEPEND="
 "
 BDEPEND="${RDEPEND}
 	dev-perl/ExtUtils-F77
+	test? (
+		dev-perl/Test-Exception
+	)
 "
