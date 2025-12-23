@@ -19,7 +19,6 @@ HOMEPAGE="
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="doc"
 
 DEPEND="
 	dev-libs/expat
@@ -37,14 +36,6 @@ BDEPEND="
 	dev-python/extension-helpers[${PYTHON_USEDEP}]
 	dev-python/cython[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
-	doc? (
-		${RDEPEND}
-		media-gfx/graphviz
-		dev-python/jinja2[${PYTHON_USEDEP}]
-		dev-python/pillow[${PYTHON_USEDEP},jpeg(+)]
-		dev-python/sphinx[${PYTHON_USEDEP}]
-		dev-python/sphinx-gallery[${PYTHON_USEDEP}]
-	)
 	test? (
 		${RDEPEND}
 		dev-python/beautifulsoup4[${PYTHON_USEDEP}]
@@ -71,14 +62,6 @@ python_prepare_all() {
 	rm -r cextern/{expat,wcslib} || die
 
 	distutils-r1_python_prepare_all
-}
-
-python_compile_all() {
-	if use doc; then
-		VARTEXFONTS="${T}"/fonts MPLCONFIGDIR="${T}" PYTHONPATH="${BUILD_DIR}"/lib \
-				   esetup.py build_docs --no-intersphinx
-		HTML_DOCS=( docs/_build/html/. )
-	fi
 }
 
 python_test() {
