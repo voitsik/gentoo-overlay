@@ -1,4 +1,4 @@
-# Copyright 2023-2025 Gentoo Authors
+# Copyright 2023-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -11,7 +11,7 @@ HOMEPAGE="
 	https://github.com/meganz/MEGAsync
 "
 
-MEGA_SDK_REV="337dbd59d7dbfb901a37abecc3939394827d1a04" # commit of src/MEGASync/mega submodule
+MEGA_SDK_REV="1c13b13cb90c77f61e38d228b73a4a6fa8df67ca" # commit of src/MEGASync/mega submodule
 MEGA_TAG_SUFFIX="Linux"
 SRC_URI="
 	https://github.com/meganz/MEGAsync/archive/v${PV}_${MEGA_TAG_SUFFIX}.tar.gz -> ${P}.tar.gz
@@ -37,12 +37,11 @@ DEPEND="
 	dev-qt/qtdeclarative:5
 	dev-qt/qtgui:5
 	dev-qt/qtnetwork:5
-	dev-qt/qtimageformats:5
 	dev-qt/qtsvg:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	net-misc/curl[ssl]
-	sys-libs/zlib
+	virtual/zlib:=
 	x11-libs/libxcb:=
 	dolphin? (
 		dev-qt/qtbase:6[network,widgets]
@@ -85,10 +84,11 @@ BDEPEND="
 
 PATCHES=(
 	"${FILESDIR}/${PN}-5.6.0.0-remove-clang-format.patch"
-	"${FILESDIR}/${PN}-5.7.0.0-disable-forced-options.patch"
+	"${FILESDIR}/${PN}-6.0.0.3-disable-forced-options.patch"
 	"${FILESDIR}/${PN}-5.7.0.0-fix-install-dir.patch"
 	"${FILESDIR}/${PN}-5.7.0.0-rename-libcryptopp.patch"
 	"${FILESDIR}/${PN}-5.10.0.2-link-zlib.patch"
+	"${FILESDIR}/${PN}-6.0.0.3-cmake4.patch"
 )
 
 BUILD_DIR_DOLPHIN="${S}_dolphin"
