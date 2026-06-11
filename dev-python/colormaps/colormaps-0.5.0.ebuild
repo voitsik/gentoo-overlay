@@ -36,6 +36,9 @@ python_prepare_all() {
 		cp "${FILESDIR}/conftest.py" tests/ || die
 	fi
 
+	# Never install the LICENSE file
+	sed -i '/LICENSE/d' setup.py || die
+
 	distutils-r1_python_prepare_all
 }
 
