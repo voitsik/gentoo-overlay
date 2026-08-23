@@ -1,0 +1,37 @@
+From 58f0a5a4915b2b414a28d3ecbd5436ae48e95a27 Mon Sep 17 00:00:00 2001
+From: Philipp Arras <c@philipp-arras.de>
+Date: Tue, 8 Jul 2025 13:19:02 +0200
+Subject: [PATCH] Test: compatibility with apparently more accurate modern
+ numpy versions
+
+---
+ test/test_numpy_accuracy.py | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/test/test_numpy_accuracy.py b/test/test_numpy_accuracy.py
+index ce38fe8d..eeabeba8 100644
+--- a/test/test_numpy_accuracy.py
++++ b/test/test_numpy_accuracy.py
+@@ -28,14 +28,16 @@ def _check(a, b):
+     assert rel_error < 1e-6
+ 
+ 
+-# When this is fixed in numpy, the warning in src/ducc_dispath.py is no longer
+-# necessary
+-@pytest.mark.xfail(reason="np.vdot inaccurate for single precision", strict=True)
++# Apparently has been fixed on modern numpy versions. Keep the xfail for
++# compatibility for older numpy versions
++@pytest.mark.xfail(reason="np.vdot inaccurate for single precision", strict=False)
+ def test_vdot():
+     a = 100*np.ones((1000000,)).astype(dt)
+     _check(a, a)
+ 
+ 
++# When this is fixed in numpy, the warning in src/ducc_dispath.py is no longer
++# necessary
+ @pytest.mark.xfail(reason="np.vdot inaccurate for single precision", strict=True)
+ def test_vdot_extreme():
+     a = np.array([1e8, 1, -1e8]).astype(dt)
+-- 
+2.54.0
+

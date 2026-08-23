@@ -1,0 +1,25 @@
+diff '--color=auto' -ur nifty8-8.5.7.orig/nifty8/re/refine/chart.py nifty8-8.5.7/nifty8/re/refine/chart.py
+--- nifty8-8.5.7.orig/nifty8/re/refine/chart.py	2025-01-13 02:11:35.000000000 +0300
++++ nifty8-8.5.7/nifty8/re/refine/chart.py	2026-08-21 03:10:22.530541168 +0300
+@@ -178,7 +178,9 @@
+                     _fine_strategy=_fine_strategy,
+                 )
+             elif distances0 is not None:
+-                distances0 = jnp.broadcast_to(jnp.atleast_1d(distances0), (self.ndim,))
++                distances0 = jnp.broadcast_to(
++                    jnp.atleast_1d(jnp.asarray(distances0)), (self.ndim,)
++                )
+                 distances = coarse2fine_distances(
+                     distances0,
+                     depth,
+@@ -186,7 +188,9 @@
+                     _fine_strategy=_fine_strategy,
+                 )
+             else:
+-                distances = jnp.broadcast_to(jnp.atleast_1d(distances), (self.ndim,))
++                distances = jnp.broadcast_to(
++                    jnp.atleast_1d(jnp.asarray(distances)), (self.ndim,)
++                )
+                 distances0 = fine2coarse_distances(
+                     distances,
+                     depth,
