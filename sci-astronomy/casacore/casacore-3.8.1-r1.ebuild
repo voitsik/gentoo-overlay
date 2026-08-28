@@ -55,6 +55,11 @@ pkg_pretend() {
 }
 
 src_prepare() {
+	# Fix RUNPATH and pkg-config path
+	sed \
+		-e "s|\(\${CMAKE_INSTALL_PREFIX}/\)lib|\1$(get_libdir)|" \
+		-i CMakeLists.txt || die
+
 	# Disable test that always fails in the sandbox
 	sed -i -e 's/tPath/# tPath/' casa/OS/test/CMakeLists.txt || die
 
