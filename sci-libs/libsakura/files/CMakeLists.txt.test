@@ -1,0 +1,106 @@
+# $Id$
+#
+# @SAKURA_LICENSE_HEADER_START@
+# Copyright (C) 2013-2022
+# Inter-University Research Institute Corporation, National Institutes of Natural Sciences
+# 2-21-1, Osawa, Mitaka, Tokyo, 181-8588, Japan.
+#
+# This file is part of Sakura.
+#
+# Sakura is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the
+# Free Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
+#
+# Sakura is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+# License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Sakura.  If not, see <http://www.gnu.org/licenses/>.
+# @SAKURA_LICENSE_HEADER_END@
+#
+find_package(Threads REQUIRED)
+find_package(FFTW3 REQUIRED)
+include(SetArchFlags)
+
+message("CMAKE_C_LINK_FLAGS  : ${CMAKE_C_LINK_FLAGS}")
+message("CMAKE_CXX_LINK_FLAGS: ${CMAKE_CXX_LINK_FLAGS}")
+
+project(libsakura_test)
+
+set(PROF_MODE "" CACHE STRING "-fprofile-generate or -fprofile-use -fprofile-correction for GCC")
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ${PROF_MODE}")
+set_cxx_flags_from_arch(${SIMD_ARCH})
+message("CMAKE_CXX_FLAGS is ${CMAKE_CXX_FLAGS}")
+
+message("PROJECT_SOURCE_DIR is ${PROJECT_SOURCE_DIR}")
+message("PROJECT_BINARY_DIR is ${PROJECT_BINARY_DIR}")
+
+include_directories(
+	${PROJECT_SOURCE_DIR}/../src 
+	${PROJECT_BINARY_DIR}/../bin 
+	${PROJECT_SOURCE_DIR} 
+	${FFTW3_INCLUDE_DIR}
+)
+
+add_custom_target(logConfig
+	COMMAND cp -f "${PROJECT_SOURCE_DIR}/libsakura.log4j" "${PROJECT_BINARY_DIR}"
+	DEPENDS "${PROJECT_SOURCE_DIR}/libsakura.log4j"
+)
+
+add_executable(testBitOperation          bit_operation.cc)
+add_executable(testBoolFilterCollection  bool_filter_collection.cc)
+add_executable(testConvolution           convolution.cc)
+add_executable(testGridding              gridding.cc)
+add_executable(testInit                  init.cc)
+add_executable(testInterpolationX        interpolation_x.cc)
+add_executable(testInterpolationY        interpolation_y.cc)
+add_executable(testLsq                   lsq.cc)
+add_executable(testNormalization         normalization.cc)
+add_executable(testNumericOperation      numeric_operation.cc)
+add_executable(testStatistics            statistics.cc)
+add_executable(testFFT                   fft.cc)
+add_executable(testCInterface            c_interface.c)
+add_executable(testCreateMaskNearEdge    mask_edge.cc)
+
+add_library(testutil SHARED testutil.cc)
+
+target_link_libraries(testBitOperation          GTest::gtest_main sakura testutil Threads::Threads)
+target_link_libraries(testBoolFilterCollection  GTest::gtest_main sakura testutil Threads::Threads)
+target_link_libraries(testConvolution           GTest::gtest_main sakura testutil Threads::Threads)
+target_link_libraries(testGridding              GTest::gtest_main sakura testutil Threads::Threads)
+target_link_libraries(testInit                  GTest::gtest_main sakura          Threads::Threads)
+target_link_libraries(testInterpolationX        GTest::gtest_main sakura testutil Threads::Threads)
+target_link_libraries(testInterpolationY        GTest::gtest_main sakura testutil Threads::Threads)
+target_link_libraries(testLsq                   GTest::gtest_main sakura testutil Threads::Threads)
+target_link_libraries(testNormalization         GTest::gtest_main sakura testutil Threads::Threads)
+target_link_libraries(testNumericOperation      GTest::gtest_main sakura testutil Threads::Threads)
+target_link_libraries(testStatistics            GTest::gtest_main sakura testutil Threads::Threads)
+target_link_libraries(testFFT                   GTest::gtest_main sakura testutil Threads::Threads)
+target_link_libraries(testCInterface            sakura                          Threads::Threads)
+target_link_libraries(testCreateMaskNearEdge    GTest::gtest_main sakura testutil Threads::Threads)
+
+add_dependencies(testInit logConfig)
+
+# Tests order
+# 1 Low-level tests (prerequisistes to other tests, initialization, log, memory management)
+# 2 Stable tests (debugging done, no fail)
+# 3 Short tests
+# 4 New stable tests
+add_test(NAME testInit COMMAND testInit)
+add_test(NAME testStatistics COMMAND testStatistics)
+add_test(NAME testBitOperation COMMAND testBitOperation)
+add_test(NAME testBoolFilterCollection COMMAND testBoolFilterCollection)
+add_test(NAME testNumericOperation COMMAND testNumericOperation)
+add_test(NAME testLsq COMMAND testLsq)
+add_test(NAME testGridding COMMAND testGridding)
+add_test(NAME testInterpolationX COMMAND testInterpolationX)
+add_test(NAME testInterpolationY COMMAND testInterpolationY)
+add_test(NAME testNormalization COMMAND testNormalization)
+add_test(NAME testConvolution COMMAND testConvolution)
+add_test(NAME testFFT COMMAND testFFT)
+add_test(NAME testCInterface COMMAND testCInterface)
+add_test(NAME testCreateMaskNearEdge COMMAND testCreateMaskNearEdge)

@@ -1,0 +1,154 @@
+# $Id$
+#
+# @SAKURA_LICENSE_HEADER_START@
+# Copyright (C) 2013-2022
+# Inter-University Research Institute Corporation, National Institutes of Natural Sciences
+# 2-21-1, Osawa, Mitaka, Tokyo, 181-8588, Japan.
+#
+# This file is part of Sakura.
+#
+# Sakura is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the
+# Free Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
+#
+# Sakura is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+# License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Sakura.  If not, see <http://www.gnu.org/licenses/>.
+# @SAKURA_LICENSE_HEADER_END@
+#
+project(libsakura VERSION 5.3.2)
+
+find_package(Threads REQUIRED)
+find_package(Eigen3 REQUIRED NO_MODULE)
+find_package(FFTW3 3.3.2 REQUIRED)
+include(SetArchFlags)
+
+set(CMAKE_INSTALL_PREFIX /usr/local)
+
+set(libsakura_PREFIX sakura)
+
+if (ENABLE_LOG4CXX)
+	find_package(LOG4CXX REQUIRED)
+	set(HAS_LOG4CXX 1)
+else ()
+	set(HAS_LOG4CXX 0)
+endif ()
+
+option(SCALAR "Disable auto-vectorization by compiler" OFF)
+option(BUILD_DOC "Enable/disable Doxygen generation of Sakura API HTML documentation" ON)
+
+set(SIMD_ARCH "NATIVE" CACHE STRING "SIMD architecture: one of NATIVE SSE4 AVX AVX2 ARM" )
+
+
+message("CMAKE_BUILD_TYPE is ${CMAKE_BUILD_TYPE}")
+
+set(VECT_VERB "" CACHE STRING "vectorization verbose compile option, such as -fopt-info-vec-optimized -fopt-info-vec-missed -ftree-vectorizer-verbose=2")
+set(PROF_MODE "" CACHE STRING "-fprofile-generate or -fprofile-use -fprofile-correction for GCC")
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-deprecated-register -fPIC")
+
+message("CMAKE_CXX_COMPILER_ID is ${CMAKE_CXX_COMPILER_ID}")
+
+message("SIMD_ARCH is ${SIMD_ARCH}")
+set_cxx_flags_from_arch(${SIMD_ARCH})
+
+if(SCALAR)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DARCH_SCALAR=1 -fno-tree-vectorize")
+endif(SCALAR)
+
+message("CMAKE_CXX_FLAGS is ${CMAKE_CXX_FLAGS}")
+message("default CMAKE_CXX_FLAGS_RELEASE is ${CMAKE_CXX_FLAGS_RELEASE}")
+message("default CMAKE_CXX_FLAGS_DEBUG is ${CMAKE_CXX_FLAGS_DEBUG}")
+
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG ${VECT_VERB} ${PROF_MODE}")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3 -DNDEBUG ${VECT_VERB} ${PROF_MODE}")
+message("CMAKE_CXX_FLAGS_RELEASE was set to ${CMAKE_CXX_FLAGS_RELEASE}")
+
+set(SOURCES 
+	baseline.cc 
+	bit_operation.cc 
+	bool_filter_collection.cc
+	convolution.cc 
+	gridding.cc 
+	interpolation.cc
+	normalization.cc 
+	numeric_operation.cc 
+	statistics.cc 
+	fft.cc
+	gen_util.cc 
+	concurrent.cc 
+	mask_edge.cc
+)
+
+configure_file (
+	"${PROJECT_SOURCE_DIR}/libsakura/config.h.in"
+	"${PROJECT_BINARY_DIR}/libsakura/config.h"
+	@ONLY
+)
+
+if(BUILD_DOC)
+	find_package(Doxygen)
+	if (NOT DOXYGEN_FOUND)
+		message(FATAL_ERROR
+			"Doxygen is needed to build the API documentation.")
+	endif(NOT DOXYGEN_FOUND)
+	if (${DOXYGEN_VERSION} MATCHES "^1\\.6.*$")
+	    message(STATUS "use template for version < 1.8")
+	    set(DOXYFILE_TEMPLATE Doxyfile.in)
+	elseif (${DOXYGEN_VERSION} MATCHES "^1\\.8.*$")
+	    message(STATUS "use template for version 1.8")
+	    set(DOXYFILE_TEMPLATE Doxyfile.in.1_8)
+	else()
+	    message(STATUS "use template for version < 1.8")
+        set(DOXYFILE_TEMPLATE Doxyfile.in)
+	endif()
+
+	configure_file (
+	  "${PROJECT_SOURCE_DIR}/${DOXYFILE_TEMPLATE}"
+	  "${PROJECT_BINARY_DIR}/Doxyfile"
+	  @ONLY)
+	add_custom_target(apidoc
+		mkdir -p "${PROJECT_BINARY_DIR}/docs"
+		COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Doxyfile
+		COMMAND cp ${PROJECT_SOURCE_DIR}/../INSTALL.txt ${PROJECT_BINARY_DIR}/docs/api/html/
+		WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+		COMMENT "Generating the API documentation with Doxygen")
+endif(BUILD_DOC)
+
+add_library(sakura SHARED ${SOURCES})
+set(public_headers
+	libsakura/sakura.h
+	${PROJECT_BINARY_DIR}/libsakura/config.h
+)
+
+set_target_properties(sakura PROPERTIES
+	VERSION ${libsakura_VERSION}
+	SOVERSION ${libsakura_VERSION_MAJOR}
+	PUBLIC_HEADER "${public_headers}"
+)
+target_include_directories(sakura PUBLIC 
+	${PROJECT_BINARY_DIR} 
+	${PROJECT_SOURCE_DIR}
+	${FFTW3_INCLUDE_DIRS}
+)
+
+set(LIBS ${FFTW3_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} Eigen3::Eigen)
+
+if(HAS_LOG4CXX)
+	set(LIBS log4cxx ${LIBS})
+endif(HAS_LOG4CXX)
+target_link_libraries(sakura ${LIBS})
+
+install(TARGETS sakura
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libsakura
+)
+
+if (BUILD_DOC)
+    install(DIRECTORY "${PROJECT_BINARY_DIR}/docs/api" DESTINATION share/doc/libsakura)
+endif(BUILD_DOC)

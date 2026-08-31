@@ -1,0 +1,23 @@
+diff '--color=auto' -ur sakura-libsakura-5.3.2.orig/libsakura/src/libsakura/localdef.h sakura-libsakura-5.3.2/libsakura/src/libsakura/localdef.h
+--- a/src/libsakura/localdef.h	2026-01-28 10:58:22.000000000 +0300
++++ b/src/libsakura/localdef.h	2026-08-30 00:46:30.154665630 +0300
+@@ -108,7 +108,7 @@
+ }
+ 
+ class ScopeGuard {
+-	typedef std::function<void(void) noexcept> Func;
++	using Func = std::function<void()>;
+ public:
+ 	ScopeGuard() = delete;
+ 	explicit ScopeGuard(Func clean_up, bool enabled = true) :
+diff '--color=auto' -ur sakura-libsakura-5.3.2.orig/libsakura/test/lsq.cc sakura-libsakura-5.3.2/libsakura/test/lsq.cc
+--- a/test/lsq.cc	2026-01-28 10:58:22.000000000 +0300
++++ b/test/lsq.cc	2026-08-30 00:58:18.401572163 +0300
+@@ -30,6 +30,7 @@
+ #include <cmath>
+ #include <cstddef>
+ #include <cstdlib>
++#include <iomanip>
+ #include <iostream>
+ #include <limits.h>
+ #include <map>
