@@ -1,0 +1,43 @@
+From 58b79b4b5187be2da2a5e7754bc87a2505d093e1 Mon Sep 17 00:00:00 2001
+From: Petr Voytsik <voitsik@asc.rssi.ru>
+Date: Wed, 2 Sep 2026 20:52:47 +0300
+Subject: [PATCH] Fix Protobuf
+
+---
+ CMakeLists.txt                    | 4 ++--
+ protobuf_generated/CMakeLists.txt | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 745b9b557a..03624c4455 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -90,10 +90,10 @@ find_package(BISON REQUIRED)
+ find_package(FLEX REQUIRED)
+ 
+ # protobuf/grpc dependency
+-find_package(Protobuf REQUIRED)
++find_package(Protobuf CONFIG REQUIRED)
+ find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
+ # Try to detect GRPC using native cmake support (for distributions like Fedora or source compilation)
+-find_package(gRPC QUIET)
++find_package(gRPC CONFIG QUIET)
+ # If that fails, try detecting GRPC with pkgconfig (for distributions like Ubuntu, Rocky Linux)
+ if(NOT DEFINED gRPC_FOUND OR gRPC_FOUND EQUAL 0)
+   pkg_check_modules(GRPC REQUIRED IMPORTED_TARGET grpc++)
+diff --git a/protobuf_generated/CMakeLists.txt b/protobuf_generated/CMakeLists.txt
+index 0235f4ef9a..e36d77e8ec 100644
+--- a/protobuf_generated/CMakeLists.txt
++++ b/protobuf_generated/CMakeLists.txt
+@@ -29,7 +29,7 @@ macro(gen_grpc _proto _hdrs _srcs)
+   set(_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/${_proto_name}.grpc.pb.h")
+   add_custom_command(
+     OUTPUT "${_proto_srcs}" "${_proto_hdrs}" "${_grpc_srcs}" "${_grpc_hdrs}"
+-    COMMAND ${Protobuf_PROTOC_EXECUTABLE}
++    COMMAND protobuf::protoc
+     ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
+     --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
+     -I "${_proto_path}"
+-- 
+2.55.0
+

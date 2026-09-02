@@ -1,0 +1,46 @@
+From c6b9aacd27aefbabbe0613a1ce9bf3b7d654cb1d Mon Sep 17 00:00:00 2001
+From: Petr Voytsik <voitsik@asc.rssi.ru>
+Date: Wed, 2 Sep 2026 23:41:11 +0300
+Subject: [PATCH] Fix pkg-config support file
+
+---
+ CMakeLists.txt | 7 ++++++-
+ casacpp.pc.in  | 8 ++++----
+ 2 files changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 03624c4455..f675c83a4c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -195,6 +195,11 @@ foreach(_component IN LISTS casacpp_all_components)
+ endforeach()
+ 
+ # Install pkg-config support file
++set (prefix ${CMAKE_INSTALL_PREFIX})
++set (exec_prefix ${CMAKE_INSTALL_PREFIX})
++set (libdir ${CMAKE_INSTALL_FULL_LIBDIR})
++set (includedir ${CMAKE_INSTALL_FULL_INCLUDEDIR})
++
+ CONFIGURE_FILE("casacpp.pc.in" "casacpp.pc" @ONLY)
+-set(CASACPP_PKGCONFIG_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig")
++set(CASACPP_PKGCONFIG_INSTALL_PREFIX "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+ INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/casacpp.pc" DESTINATION "${CASACPP_PKGCONFIG_INSTALL_PREFIX}")
+diff --git a/casacpp.pc.in b/casacpp.pc.in
+index 08a996b2c3..4cd28c3130 100644
+--- a/casacpp.pc.in
++++ b/casacpp.pc.in
+@@ -1,7 +1,7 @@
+-prefix=@CMAKE_INSTALL_PREFIX@
+-exec_prefix=${prefix}
+-libdir=${exec_prefix}/lib
+-includedir=${prefix}/include
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
+ 
+ Name: Casacpp
+ Description: @CMAKE_PROJECT_DESCRIPTION@
+-- 
+2.55.0
+
