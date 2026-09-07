@@ -42,6 +42,10 @@ BDEPEND="
 	virtual/pkgconfig
 "
 
+PATCHES=(
+	"${FILESDIR}/${P}-cmake-build-dir.patch"
+)
+
 pkg_pretend() {
 	[[ ${MERGE_TYPE} != binary ]] && tc-check-openmp
 }
