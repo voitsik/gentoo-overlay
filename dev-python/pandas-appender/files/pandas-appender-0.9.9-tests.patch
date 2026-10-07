@@ -1,0 +1,55 @@
+diff --git a/test/test_appender.py b/test/test_appender.py
+index ff54616..2251e87 100644
+--- a/test/test_appender.py
++++ b/test/test_appender.py
+@@ -58,7 +58,7 @@ def test_basics():
+ 
+ 
+ def test_hints():
+-    dtypes = pd.Series({'a': 'float64', 'b': 'int64'})
++    dtypes = pd.Series({'a': 'float64', 'b': 'int64'}, dtype='object')
+ 
+     dfa = DF_Appender(ignore_index=True, chunksize=2, dtypes=dtypes)
+     for aa in range(10):
+diff --git a/test/test_hints.py b/test/test_hints.py
+index fe00c59..83b8fdb 100644
+--- a/test/test_hints.py
++++ b/test/test_hints.py
+@@ -10,7 +10,7 @@ def test_infer_categories():
+     df = pd.DataFrame(dfl)
+     orig_dtypes = df.dtypes
+     inferred = hints.infer_categories(df)
+-    assert inferred.equals(pd.Series({'a': 'category'}))
++    assert inferred.equals(pd.Series({'a': 'category'}, dtype='object'))
+     assert df.dtypes.equals(orig_dtypes), 'dtypes was not changed by the infer call'
+ 
+     df2 = df.astype(inferred)
+@@ -29,7 +29,7 @@ def test_infer_categories():
+         dfl.append({'a': 0, 'b': [aa]})
+     df = pd.DataFrame(dfl)
+     inferred = hints.infer_categories(df)
+-    assert inferred.equals(pd.Series({'a': 'category'}))
++    assert inferred.equals(pd.Series({'a': 'category'}, dtype='object'))
+ 
+ 
+ def test_determine_dtype():
+@@ -39,13 +39,17 @@ def test_determine_dtype():
+         [(0, float('nan')), 'float64'],
+         [(0, None), 'float64'],
+         [(0, 'foo'), 'object'],
+-        [(None, 'foo'), 'object'],
++        # pandas 3 infers a dedicated string dtype for this input; older
++        # versions infer object.
++        [(None, 'foo'), {'object', 'str'}],
+         [(None,), 'object'],
+         [(0,), 'int64'],
+     ]
+     for t in tests:
+         data, dtype = t
+-        assert hints.determine_dtype(data) == dtype
++        actual_dtype = hints.determine_dtype(data)
++        expected_dtypes = dtype if isinstance(dtype, set) else {dtype}
++        assert actual_dtype in expected_dtypes
+ 
+ 
+ def test_harmonize():
