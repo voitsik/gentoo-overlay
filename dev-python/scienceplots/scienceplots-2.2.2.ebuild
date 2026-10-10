@@ -17,9 +17,10 @@ HOMEPAGE="
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="+latex"
 
 RDEPEND="
-	dev-python/matplotlib[${PYTHON_USEDEP}]
+	dev-python/matplotlib[${PYTHON_USEDEP},latex?]
 "
 BDEPEND="
 	test? (
