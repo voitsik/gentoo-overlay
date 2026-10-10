@@ -10,6 +10,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="Format Matplotlib for scientific plotting"
 HOMEPAGE="
+	https://github.com/garrettj403/SciencePlots
 	https://pypi.org/project/scienceplots/
 "
 
@@ -27,4 +28,5 @@ BDEPEND="
 	)
 "
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
