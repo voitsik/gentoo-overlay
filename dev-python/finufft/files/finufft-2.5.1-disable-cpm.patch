@@ -1,0 +1,66 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index cd5ee9b..988d15d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -77,7 +77,7 @@ mark_as_advanced(
+     CUDA12_CCCL_VERSION
+ )
+ 
+-include(setupCPM)
++# include(setupCPM)
+ 
+ if(FINUFFT_USE_CPU)
+     if(FINUFFT_USE_OPENMP)
+diff --git a/cmake/setupFFTW.cmake b/cmake/setupFFTW.cmake
+index a6b84b3..aa719cc 100644
+--- a/cmake/setupFFTW.cmake
++++ b/cmake/setupFFTW.cmake
+@@ -1,21 +1,21 @@
+-CPMAddPackage(
+-    NAME
+-    findfftw
+-    GIT_REPOSITORY
+-    "https://github.com/egpbos/findFFTW.git"
+-    GIT_TAG
+-    "master"
+-    EXCLUDE_FROM_ALL
+-    YES
+-    GIT_SHALLOW
+-    YES
+-)
++# CPMAddPackage(
++#     NAME
++#     findfftw
++#     GIT_REPOSITORY
++#     "https://github.com/egpbos/findFFTW.git"
++#     GIT_TAG
++#     "master"
++#     EXCLUDE_FROM_ALL
++#     YES
++#     GIT_SHALLOW
++#     YES
++# )
+ 
+ list(APPEND CMAKE_MODULE_PATH "${findfftw_SOURCE_DIR}")
+ set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" PARENT_SCOPE)
+ 
+ if(FINUFFT_FFTW_LIBRARIES STREQUAL DEFAULT OR FINUFFT_FFTW_LIBRARIES STREQUAL DOWNLOAD)
+-    find_package(FFTW)
++    find_package(FFTW REQUIRED)
+     if((NOT FFTW_FOUND) OR (FINUFFT_FFTW_LIBRARIES STREQUAL DOWNLOAD))
+         if(FINUFFT_FFTW_SUFFIX STREQUAL THREADS)
+             set(FINUFFT_USE_THREADS ON)
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index af81ac2..ef34241 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -6,7 +6,8 @@ if((APPLE) AND (CMAKE_CXX_COMPILER_ID STREQUAL "GNU"))
+ endif()
+ 
+ set(FINUFFT_FFTW_LIBRARIES)
+-include(setupXSIMD)
++# include(setupXSIMD)
++find_package(xsimd REQUIRED)
+ if(FINUFFT_USE_DUCC0)
+     include(setupDUCC)
+ else()
