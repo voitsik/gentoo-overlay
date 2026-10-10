@@ -31,6 +31,9 @@ BDEPEND="
 	test? ( ${RDEPEND} )
 "
 
+PATCHES=( "${FILESDIR}/${P}-fix-excerpt-test.patch" )
+
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
 
 src_unpack() {
