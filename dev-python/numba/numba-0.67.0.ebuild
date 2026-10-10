@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	>=dev-python/llvmlite-0.49[$PYTHON_USEDEP]
+	=dev-python/llvmlite-0.49*[$PYTHON_USEDEP]
 	dev-python/numpy[$PYTHON_USEDEP]
 "
 BDEPEND="${RDEPEND}"
