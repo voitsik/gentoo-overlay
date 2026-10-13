@@ -1,0 +1,26 @@
+diff --git a/scimath/Mathematics/test/tInterpolate2D.cc b/scimath/Mathematics/test/tInterpolate2D.cc
+index b41545c6b..84480ad2f 100644
+--- a/scimath/Mathematics/test/tInterpolate2D.cc
++++ b/scimath/Mathematics/test/tInterpolate2D.cc
+@@ -58,7 +58,7 @@ int main() {
+     where(1) = 6.1;
+ 
+     // Test for all implemented methods
+-    std::vector<string> methods(4);
++    std::vector<std::string> methods(4);
+     methods[0] = "linear";
+     methods[1] = "cubic";
+     methods[2] = "lanczos";
+diff --git a/scimath/StatsFramework/StatsHistogram.tcc b/scimath/StatsFramework/StatsHistogram.tcc
+index 481eeee42..409c9defd 100644
+--- a/scimath/StatsFramework/StatsHistogram.tcc
++++ b/scimath/StatsFramework/StatsHistogram.tcc
+@@ -106,7 +106,7 @@ unsigned int StatsHistogram<AccumType>::getIndex(AccumType value) const {
+       maxIdx = testIdx - 1;
+     }
+   }
+-  ostringstream os;
++  std::ostringstream os;
+   os << std::setprecision(20) << "Logic Error: Unable to locate bin "
+      << "containing value " << value << endl;
+   os << "Histogram spec " << *this << endl;
